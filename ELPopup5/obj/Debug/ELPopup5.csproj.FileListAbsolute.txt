@@ -1,0 +1,13 @@
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\ELPopup5.exe.config
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\ELPopup5.exe
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\ELPopup5.pdb
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csprojAssemblyReference.cache
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmPopup.resources
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.Properties.Resources.resources
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csproj.GenerateResource.cache
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csproj.CoreCompileInputs.cache
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.exe
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.pdb
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmMain.resources
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\System.Data.SQLite.DLL
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csproj.CopyComplete
