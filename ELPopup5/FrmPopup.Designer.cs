@@ -39,10 +39,10 @@
             // 
             this.tbCallerId.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbCallerId.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCallerId.Location = new System.Drawing.Point(12, 60);
+            this.tbCallerId.Location = new System.Drawing.Point(50, 23);
             this.tbCallerId.Name = "tbCallerId";
             this.tbCallerId.ReadOnly = true;
-            this.tbCallerId.Size = new System.Drawing.Size(506, 32);
+            this.tbCallerId.Size = new System.Drawing.Size(390, 32);
             this.tbCallerId.TabIndex = 2;
             this.tbCallerId.Text = "111111111111111   222222222222222";
             this.tbCallerId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -54,12 +54,12 @@
             // 
             this.tbInOutCall.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbInOutCall.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbInOutCall.Location = new System.Drawing.Point(12, 12);
+            this.tbInOutCall.Location = new System.Drawing.Point(12, 23);
             this.tbInOutCall.Name = "tbInOutCall";
             this.tbInOutCall.ReadOnly = true;
-            this.tbInOutCall.Size = new System.Drawing.Size(493, 32);
+            this.tbInOutCall.Size = new System.Drawing.Size(32, 32);
             this.tbInOutCall.TabIndex = 3;
-            this.tbInOutCall.Text = "Incoming Call on L1";
+            this.tbInOutCall.Text = "L1";
             this.tbInOutCall.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbInOutCall.WordWrap = false;
             this.tbInOutCall.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
@@ -75,11 +75,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(530, 113);
+            this.ClientSize = new System.Drawing.Size(480, 80);
             this.Controls.Add(this.tbInOutCall);
             this.Controls.Add(this.tbCallerId);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmPopup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Incoming Call";

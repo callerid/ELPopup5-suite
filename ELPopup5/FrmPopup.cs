@@ -37,14 +37,16 @@ namespace ELPopup5
             FullName = name;
             USTRING = uString;
 
+            tbInOutCall.Text = "L" + line.ToString();
+            Opacity = 0.93;
+
             if (isInbound)
             {
-                tbInOutCall.Text = "Incoming Call on Line " + line.ToString();
-                BackColor = Color.LightGreen;
+                BackColor = Program.C_INCOMING_CALL_BACKGROUND;
+                ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
             }
             else
             {
-                tbInOutCall.Text = "Outgoing Call on Line " + line.ToString();
                 BackColor = Color.LightBlue;
             }
 
@@ -52,22 +54,22 @@ namespace ELPopup5
 
             if (isInbound)
             {
-                BackColor = Color.LightGreen;
-                tbInOutCall.BackColor = Color.LightGreen;
-                tbCallerId.BackColor = Color.LightGreen;
+                BackColor = Program.C_INCOMING_CALL_BACKGROUND;
+                tbInOutCall.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
+                tbCallerId.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
 
-                tbInOutCall.ForeColor = Color.DarkGreen;
-                tbCallerId.ForeColor = Color.DarkGreen;
+                tbInOutCall.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
+                tbCallerId.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
 
             }
             else
             {
-                BackColor = Program.C_BACKGROUND;
-                tbInOutCall.BackColor = Program.C_BACKGROUND;
-                tbCallerId.BackColor = Program.C_BACKGROUND;
+                BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
+                tbInOutCall.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
+                tbCallerId.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
 
-                tbInOutCall.ForeColor = Program.C_TEXT;
-                tbCallerId.ForeColor = Program.C_TEXT;
+                tbInOutCall.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
+                tbCallerId.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
             }
 
             tbCallerId.Text = num.ToString().PadRight(18, ' ') + name.ToString().Trim();

@@ -66,6 +66,12 @@
     <Compile Include="FrmPopup.Designer.cs">
       <DependentUpon>FrmPopup.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTimerMsgBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTimerMsgBox.Designer.cs">
+      <DependentUpon>FrmTimerMsgBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
@@ -73,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPopup.resx">
       <DependentUpon>FrmPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTimerMsgBox.resx">
+      <DependentUpon>FrmTimerMsgBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

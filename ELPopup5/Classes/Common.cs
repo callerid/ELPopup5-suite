@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ELPopup5.Classes
@@ -18,8 +19,6 @@ namespace ELPopup5.Classes
 
                 if(c is TextBox)
                 {
-                    if (c.Name == "tbSearch") continue;
-
                     c.BackColor = Program.C_BACKGROUND;
                     c.ForeColor = Program.C_TEXT;
                 }
@@ -28,6 +27,8 @@ namespace ELPopup5.Classes
                 {
                     DataGridView dgv = (DataGridView)c;
                     dgv.BackgroundColor = Program.C_BACKGROUND;
+                    dgv.DefaultCellStyle.SelectionBackColor = Program.C_TEXT;
+                    dgv.DefaultCellStyle.SelectionForeColor = Color.White;
                 }
 
             }
@@ -57,7 +58,8 @@ namespace ELPopup5.Classes
 
             if (hours > 0) dur += hours.ToString().PadLeft(2, '0') + ":";
             dur += minutes.ToString().PadLeft(2, '0') + ":";
-            dur += d.Seconds.ToString().PadLeft(2, '0');
+            string sec = d.Seconds.ToString().PadLeft(2, '0');
+            dur += sec;
 
             return dur;
 

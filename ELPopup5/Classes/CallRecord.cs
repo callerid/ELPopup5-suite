@@ -26,9 +26,10 @@ namespace ELPopup5.Classes
         public DateTime DateTime;
         public string PhoneNumber;
         public string Name;
+        public string UniqueID;
 
         public bool InternalBlock;
-
+        
         public CallRecord(string udp_string)
         {
             Reception_String = udp_string;
@@ -83,6 +84,8 @@ namespace ELPopup5.Classes
                 PhoneNumber = CallMatch.Groups[9].Value;
                 Name = CallMatch.Groups[10].Value;
 
+                UniqueID = DateTime.ToString() + Name + PhoneNumber;
+
                 return;
             }
 
@@ -101,6 +104,8 @@ namespace ELPopup5.Classes
 
                 var date = DetailedMatch.Groups[3].Value.ToString();
                 DateTime = DateTime.ParseExact(date, "MM/dd HH:mm:ss", new CultureInfo("en-US"));
+
+                UniqueID = Reception_String;
 
                 return;
             }

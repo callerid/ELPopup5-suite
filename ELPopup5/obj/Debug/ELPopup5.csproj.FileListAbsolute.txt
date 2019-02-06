@@ -11,3 +11,4 @@ F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.pdb
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmMain.resources
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\System.Data.SQLite.DLL
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csproj.CopyComplete
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmTimerMsgBox.resources

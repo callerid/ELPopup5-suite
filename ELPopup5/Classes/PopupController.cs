@@ -10,7 +10,7 @@ namespace cid_cm.Classes
     public class PopupController
     {
         public static int popups = 0;
-        public const int popupHeight = 150;
+        public const int popupHeight = 84;
         public List<FrmPopup> PopupsList;
         public string Number = "";
         public bool[] PosIsTaken;
