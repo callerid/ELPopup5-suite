@@ -22,5 +22,149 @@ namespace ELPopup5.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public string SS_COM_PORT {
+            get {
+                return ((string)(this["SS_COM_PORT"]));
+            }
+            set {
+                this["SS_COM_PORT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int POPUP_TIME {
+            get {
+                return ((int)(this["POPUP_TIME"]));
+            }
+            set {
+                this["POPUP_TIME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool POPUP_INBOUND {
+            get {
+                return ((bool)(this["POPUP_INBOUND"]));
+            }
+            set {
+                this["POPUP_INBOUND"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool POPUP_OUTBOUND {
+            get {
+                return ((bool)(this["POPUP_OUTBOUND"]));
+            }
+            set {
+                this["POPUP_OUTBOUND"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool USE_COMPUTER_TIME {
+            get {
+                return ((bool)(this["USE_COMPUTER_TIME"]));
+            }
+            set {
+                this["USE_COMPUTER_TIME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int MAX_LINE_NUMBER {
+            get {
+                return ((int)(this["MAX_LINE_NUMBER"]));
+            }
+            set {
+                this["MAX_LINE_NUMBER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("777")]
+        public int MAIN_WINDOW_WIDTH {
+            get {
+                return ((int)(this["MAIN_WINDOW_WIDTH"]));
+            }
+            set {
+                this["MAIN_WINDOW_WIDTH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("511")]
+        public int MAIN_WINDOW_HEIGHT {
+            get {
+                return ((int)(this["MAIN_WINDOW_HEIGHT"]));
+            }
+            set {
+                this["MAIN_WINDOW_HEIGHT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int MAIN_WINDOW_X {
+            get {
+                return ((int)(this["MAIN_WINDOW_X"]));
+            }
+            set {
+                this["MAIN_WINDOW_X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int MAIN_WINDOW_Y {
+            get {
+                return ((int)(this["MAIN_WINDOW_Y"]));
+            }
+            set {
+                this["MAIN_WINDOW_Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool USE_CUSTOM_MAIN_WINDOW_SIZING {
+            get {
+                return ((bool)(this["USE_CUSTOM_MAIN_WINDOW_SIZING"]));
+            }
+            set {
+                this["USE_CUSTOM_MAIN_WINDOW_SIZING"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool USE_CUSTOM_POSITION {
+            get {
+                return ((bool)(this["USE_CUSTOM_POSITION"]));
+            }
+            set {
+                this["USE_CUSTOM_POSITION"] = value;
+            }
+        }
     }
 }

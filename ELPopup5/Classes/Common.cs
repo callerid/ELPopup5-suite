@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
+using System.Globalization;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ELPopup5.Classes
@@ -17,9 +21,25 @@ namespace ELPopup5.Classes
             foreach(Control c in f.Controls)
             {
 
+                if(c is TabControl)
+                {
+                    TabControl tc = (TabControl)c;
+                    foreach(TabPage tab in tc.TabPages)
+                    {
+                        tab.BackColor = Program.C_BACKGROUND;
+                        tab.ForeColor = Program.C_TEXT;
+                    }
+                }
+
                 if(c is TextBox)
                 {
-                    c.BackColor = Program.C_BACKGROUND;
+                    if (c.Name == "tbMsg")
+                    {
+                        c.BackColor = Program.C_BACKGROUND;
+                        c.ForeColor = Program.C_TEXT;
+                        continue;
+                    }
+                    c.BackColor = Color.White;
                     c.ForeColor = Program.C_TEXT;
                 }
 
@@ -63,6 +83,22 @@ namespace ELPopup5.Classes
 
             return dur;
 
+        }
+
+        public static string GetSQLiteDateFromDateTime(DateTime d)
+        {
+            return d.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+        }
+
+        public static DateTime GetDateTimeFromSQLiteDate(string d)
+        {
+            return DateTime.ParseExact(d, "yyyy-MM-dd HH:mm:ss.fff", null);
+        }
+
+        public static DateTime MakeSimpleDate(DateTime d)
+        {
+            string new_date = d.Year.ToString() + "-" + d.Month.ToString().PadLeft(2, '0') + "-" + d.Day.ToString().PadLeft(2, '0') + " 01:00:00.000";
+            return DateTime.ParseExact(new_date, "yyyy-MM-dd HH:mm:ss.fff", null);
         }
 
     }

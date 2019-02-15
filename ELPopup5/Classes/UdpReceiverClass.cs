@@ -12,8 +12,7 @@ namespace ELPopup5.Classes
         public static Boolean Done;
         public static string ReceivedMessage;
         public static byte[] ReceviedMessageByte;
-        public static int[] NListenPorts = new int[] { 3520 };
-        public static string BoundTo;
+        public static string BoundTo = "";
 
         // Define event
         public delegate void UdpEventHandler(UdpReceiverClass u, EventArgs e);
@@ -34,22 +33,30 @@ namespace ELPopup5.Classes
             IPEndPoint groupEp = null;
 
             bool bound = false;
-            try
+            int[] udp_ports = new int[] { 3520, 6699, 3521, 3522, 3523, 3524, 3525, 3526, 3527, 3528, 3529 };
+            int index = 0;
+
+            while(index < udp_ports.Length && !bound)
             {
-                listener = new UdpClient(3520);
-                groupEp = new IPEndPoint(IPAddress.Any, 3520);
-                bound = true;
-                BoundTo = "3520";
-            }
-            catch (Exception ex)
-            {
-                bound = false;
-                Console.Write("Failed to bind: " + ex.ToString());
+                try
+                {
+                    listener = new UdpClient(udp_ports[index]);
+                    groupEp = new IPEndPoint(IPAddress.Any, udp_ports[index]);
+                    bound = true;
+                    BoundTo = udp_ports[index].ToString();
+                    Console.WriteLine("Bound to: " + BoundTo);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    bound = false;
+                    index++;
+                }
             }
 
             if (!bound)
             {
-                var erString = "Binding to ports 3520 failed. Closing...";
+                var erString = "Binding to ports 3520-3529 or 6699 failed.";
                 MessageBox.Show(erString);
                 return;
             }

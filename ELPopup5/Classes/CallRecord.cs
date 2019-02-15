@@ -7,7 +7,7 @@ namespace ELPopup5.Classes
     class CallRecord
     {
 
-        public static string Reception_String;
+        public string Reception_String;
         public bool IsValid;
 
         public Match CallMatch;
@@ -38,7 +38,7 @@ namespace ELPopup5.Classes
             //------------------------------------------------------
             //    Full Call Records
             //------------------------------------------------------
-            CallMatch = Regex.Match(Reception_String, @".*(\d\d) ([IO]) ([ESB]) (\d{4}) ([GB]) (.)(\d) (\d\d/\d\d \d\d:\d\d [AP]M) (.{8,15})(.*)");
+            CallMatch = Regex.Match(Reception_String, @".*(\d\d) ([IO]) ([ESB]) (\d{4}) ([GB]) (.)(\d) (\d\d/\d\d \d\d:\d\d [AP]M) (.{14})(.{15})");
             //                                              |      |       |       |      |      |               |                     |     |
             //                                              01 Line        03 Start/End/Block    06 Ring(T#)     08 Datetime start     09 Phone Number
             //                                                     02 Inbound/Outbound    05 Checksum                                        10 Name

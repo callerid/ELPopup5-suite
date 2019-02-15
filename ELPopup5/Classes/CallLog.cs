@@ -60,7 +60,12 @@ namespace ELPopup5.Classes
 
         }
 
-        public static void AddCall(string line, string type, string indicator, string duration, string checksum, string rings, string date_and_time, string number, string name, string id)
+        public static void DeleteDatabase()
+        {
+            if (File.Exists(DatabaseFile)) File.Delete(DatabaseFile);
+        }
+
+        public static void AddCall(string line, string type, string indicator, string duration, string checksum, string rings, DateTime date, string number, string name, string id)
         {
             // Create connection to database
             SQLiteConnection myConnection = new SQLiteConnection();
@@ -78,7 +83,7 @@ namespace ELPopup5.Classes
             }
 
             // Insert new data into database
-            SQLiteCommand myCommand = new SQLiteCommand("INSERT INTO calls(Line, Type, Indicator, Duration, Checksum, Rings, DateAndTime, Number, Name, UID) Values ('" + line + "','" + type + "','" + indicator + "','" + duration + "','" + checksum + "','" + rings + "','" + date_and_time + "','" + number + "','" + name + "', '" + id + "')", myConnection);
+            SQLiteCommand myCommand = new SQLiteCommand("INSERT INTO calls(Line, Type, Indicator, Duration, Checksum, Rings, DateAndTime, Number, Name, UID) Values ('" + line + "','" + type + "','" + indicator + "','" + duration + "','" + checksum + "','" + rings + "','" + Common.GetSQLiteDateFromDateTime(date) + "','" + number + "','" + name + "', '" + id + "')", myConnection);
             if (myConnection.State == ConnectionState.Open)
             {
                 myCommand.ExecuteNonQuery();
@@ -130,7 +135,159 @@ namespace ELPopup5.Classes
                 rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["UID"]);
             }
 
+            try
+            {
+                myConnection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
             return rtn;
+        }
+
+        public static DataTable FilterCallLog(string filter, int limit)
+        {
+            string query = "SELECT * FROM calls ORDER BY id DESC LIMIT " + limit + ";";
+
+            DateTime today = Common.MakeSimpleDate(DateTime.Now);
+            DateTime yesterday = Common.MakeSimpleDate(today.Subtract(new TimeSpan(1, 0, 0, 0)));
+            DateTime two_days_back = Common.MakeSimpleDate(today.Subtract(new TimeSpan(2, 0, 0, 0)));
+
+            string today_str = Common.GetSQLiteDateFromDateTime(today);
+            string yesterday_str = Common.GetSQLiteDateFromDateTime(yesterday);
+            string two_days_back_str = Common.GetSQLiteDateFromDateTime(two_days_back);
+
+            switch (filter)
+            {
+
+                case "Inbound":
+
+                    query = "SELECT * FROM calls WHERE Indicator = 'I' ORDER BY id DESC LIMIT " + limit + ";";
+
+                    break;
+
+                case "Outbound":
+
+                    query = "SELECT * FROM calls WHERE Indicator = 'O' ORDER BY id DESC LIMIT " + limit + ";";
+
+                    break;
+
+                case "Today":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime > date('now', '-1 days') LIMIT " + limit + ";";
+
+                    break;
+
+                case "Yesterday":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime BETWEEN date('now', '-2 days') AND date('now') LIMIT " + limit + ";";
+
+                    break;
+
+                case "This Morning":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime > datetime('now','start of day') AND DateAndTime < datetime('now','start of day', '+12 hours') LIMIT " + limit + ";";
+
+                    break;
+
+                case "This Afternoon":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime > datetime('now','start of day', '+12 hours') AND DateAndTime < datetime('now','start of day','+24 hours') LIMIT " + limit + ";";
+
+                    break;
+
+                case "Morning":
+
+                    query = "SELECT * FROM calls WHERE TIME(DateAndTime) > TIME('now','start of day') AND TIME(DateAndTime) < TIME('now','start of day','+12 hours') LIMIT " + limit + ";";
+
+                    break;
+
+                case "Afternoon":
+
+                    query = "SELECT * FROM calls WHERE TIME(DateAndTime) > TIME('now','start of day','+12 hours') AND TIME(DateAndTime) < TIME('now','start of day','+23 hours','+59 minutes','+59 seconds') LIMIT " + limit + ";";
+
+                    break;
+
+                case "This week":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime BETWEEN date('now', 'weekday 0', '-7 days') AND date('now', 'weekday 0', '-1 days') LIMIT " + limit + ";";
+
+                    break;
+
+                case "Last week":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime BETWEEN date('now', 'weekday 0', '-14 days') AND date('now', 'weekday 0', '-7 days') LIMIT " + limit + ";";
+
+                    break;
+
+                case "This month":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime BETWEEN date('now','start of month') AND date('now','start of month','+1 month','-1 day') LIMIT " + limit + ";";
+
+                    break;
+
+                case "Last month":
+
+                    query = "SELECT * FROM calls WHERE DateAndTime BETWEEN date('now','start of month', '-1 month') AND date('now','start of month') LIMIT " + limit + ";";
+
+                    break;
+
+                default:
+
+                    query = "SELECT * FROM calls WHERE Name LIKE '%" + filter + "%' OR Number LIKE '%" + filter + "%' LIMIT " + limit + ";";
+
+                    break;
+
+
+            }
+
+            // Create connection to database
+            SQLiteConnection myConnection = new SQLiteConnection();
+            myConnection.ConnectionString = @"Data Source=" + DatabaseFile;
+
+            // Log into log database
+            try
+            {
+                myConnection.Open();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
+            DataTable rtn = new DataTable();
+            rtn.Columns.Add("name");
+            rtn.Columns.Add("number");
+            rtn.Columns.Add("time");
+            rtn.Columns.Add("dur");
+            rtn.Columns.Add("line");
+            rtn.Columns.Add("io");
+            rtn.Columns.Add("rings");
+            rtn.Columns.Add("uid");
+
+            SQLiteCommand command = new SQLiteCommand(query, myConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["UID"]);
+            }
+
+            try
+            {
+                myConnection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
+            return rtn;
+
         }
     }
 }

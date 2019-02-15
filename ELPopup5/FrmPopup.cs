@@ -30,6 +30,7 @@ namespace ELPopup5
         public FrmPopup(int id, int line, bool isInbound, string num, string name, int x, int y, int pos, string uString)
         {
             InitializeComponent();
+            timerAutoClose.Interval = Properties.Settings.Default.POPUP_TIME * 1000;
 
             ID = id;
             POS = pos;
@@ -56,29 +57,62 @@ namespace ELPopup5
             {
                 BackColor = Program.C_INCOMING_CALL_BACKGROUND;
                 tbInOutCall.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
-                tbCallerId.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
+                tbNumber.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
+                tbName.BackColor = Program.C_INCOMING_CALL_BACKGROUND;
 
                 tbInOutCall.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
-                tbCallerId.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
+                tbNumber.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
+                tbName.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
+
+                btnClose.BackColor = Program.C_INCOMING_CALL_FOREGROUND;
+                btnClose.ForeColor = Program.C_INCOMING_CALL_BACKGROUND;
 
             }
             else
             {
                 BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
                 tbInOutCall.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
-                tbCallerId.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
+                tbNumber.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
+                tbName.BackColor = Program.C_OUTGOING_CALL_BACKGROUND;
 
                 tbInOutCall.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
-                tbCallerId.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
+                tbNumber.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
+                tbName.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
+
+                btnClose.BackColor = Program.C_OUTGOING_CALL_FOREGROUND;
+                btnClose.ForeColor = Program.C_OUTGOING_CALL_BACKGROUND;
             }
 
-            tbCallerId.Text = num.ToString().PadRight(18, ' ') + name.ToString().Trim();
+            tbNumber.Text = num;
+            tbName.Text = name;
 
             Location = new Point(x, y);
 
             IntPtr handle = this.Handle;
             SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
+        }
+
+        public void CopyTextboxText(object sender, EventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox tb = (TextBox)sender;
+                if (string.IsNullOrEmpty(tb.Text)) return;
+                Clipboard.SetText(tb.Text);
+                string type = (tb.Name.ToLower().Contains("number")) ? "Number" : "Name";
+                
+                if(type == "Number")
+                {
+                    lbCopiedNumber.Visible = true;
+                    lbCopiedName.Visible = false;
+                }
+                else if(type == "Name")
+                {
+                    lbCopiedName.Visible = true;
+                    lbCopiedNumber.Visible = false;
+                }
+            }
         }
 
         private void timerAutoClose_Tick(object sender, EventArgs e)
@@ -110,11 +144,14 @@ namespace ELPopup5
             Location = new Point(x, y);
         }
 
-
         private void FrmPopup_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.fMain.pController.RemovePopup(ID);
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
