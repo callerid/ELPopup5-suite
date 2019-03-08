@@ -18,6 +18,36 @@ namespace ELPopup5.Classes
         public delegate void UdpEventHandler(UdpReceiverClass u, EventArgs e);
         public event UdpEventHandler DataReceived;
 
+        public static void SendUDP(string send_string, string ip, int port)
+        {
+            if (ip == "0.0.0.0") return;
+
+            bool valid_ip = true;
+
+            try
+            {
+                IPAddress temp = IPAddress.Parse(ip);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                valid_ip = false;
+            }
+
+            if (!valid_ip) return;
+
+            byte[] to_send = Encoding.ASCII.GetBytes(send_string);
+
+            UdpClient udp_sender = new UdpClient();
+
+            udp_sender.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
+
+            udp_sender.Send(to_send, to_send.Length);
+
+            udp_sender.Close();
+
+        }
+
         // Idle listening
         public void UdpIdleReceive()
         {

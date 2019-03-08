@@ -34,16 +34,15 @@
             this.tbInOutCall = new System.Windows.Forms.TextBox();
             this.timerAutoClose = new System.Windows.Forms.Timer(this.components);
             this.tbName = new System.Windows.Forms.TextBox();
-            this.lbCopiedNumber = new System.Windows.Forms.Label();
-            this.lbCopiedName = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
+            this.lbClose = new System.Windows.Forms.Label();
+            this.timerResetToNameAndNumber = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // tbNumber
             // 
             this.tbNumber.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbNumber.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNumber.Location = new System.Drawing.Point(62, 24);
+            this.tbNumber.Location = new System.Drawing.Point(41, 4);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.ReadOnly = true;
             this.tbNumber.Size = new System.Drawing.Size(172, 32);
@@ -58,7 +57,7 @@
             // 
             this.tbInOutCall.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbInOutCall.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbInOutCall.Location = new System.Drawing.Point(24, 24);
+            this.tbInOutCall.Location = new System.Drawing.Point(3, 4);
             this.tbInOutCall.Name = "tbInOutCall";
             this.tbInOutCall.ReadOnly = true;
             this.tbInOutCall.Size = new System.Drawing.Size(32, 32);
@@ -79,7 +78,7 @@
             // 
             this.tbName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbName.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(240, 24);
+            this.tbName.Location = new System.Drawing.Point(219, 4);
             this.tbName.Name = "tbName";
             this.tbName.ReadOnly = true;
             this.tbName.Size = new System.Drawing.Size(218, 32);
@@ -90,52 +89,30 @@
             this.tbName.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
             this.tbName.MouseHover += new System.EventHandler(this.FrmPopup_MouseHover);
             // 
-            // lbCopiedNumber
+            // lbClose
             // 
-            this.lbCopiedNumber.AutoSize = true;
-            this.lbCopiedNumber.Location = new System.Drawing.Point(62, 58);
-            this.lbCopiedNumber.Name = "lbCopiedNumber";
-            this.lbCopiedNumber.Size = new System.Drawing.Size(88, 13);
-            this.lbCopiedNumber.TabIndex = 5;
-            this.lbCopiedNumber.Text = "Copied Number";
-            this.lbCopiedNumber.Visible = false;
-            this.lbCopiedNumber.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
-            this.lbCopiedNumber.MouseHover += new System.EventHandler(this.FrmPopup_MouseHover);
+            this.lbClose.AutoSize = true;
+            this.lbClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbClose.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbClose.Location = new System.Drawing.Point(443, 4);
+            this.lbClose.Name = "lbClose";
+            this.lbClose.Size = new System.Drawing.Size(20, 21);
+            this.lbClose.TabIndex = 7;
+            this.lbClose.Text = "X";
+            this.lbClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.lbClose.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
+            this.lbClose.MouseHover += new System.EventHandler(this.FrmPopup_MouseHover);
             // 
-            // lbCopiedName
+            // timerResetToNameAndNumber
             // 
-            this.lbCopiedName.AutoSize = true;
-            this.lbCopiedName.Location = new System.Drawing.Point(237, 58);
-            this.lbCopiedName.Name = "lbCopiedName";
-            this.lbCopiedName.Size = new System.Drawing.Size(76, 13);
-            this.lbCopiedName.TabIndex = 6;
-            this.lbCopiedName.Text = "Copied Name";
-            this.lbCopiedName.Visible = false;
-            this.lbCopiedName.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
-            this.lbCopiedName.MouseHover += new System.EventHandler(this.FrmPopup_MouseHover);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnClose.Location = new System.Drawing.Point(463, 6);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(26, 21);
-            this.btnClose.TabIndex = 7;
-            this.btnClose.Text = "X";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            this.btnClose.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
-            this.btnClose.MouseHover += new System.EventHandler(this.FrmPopup_MouseHover);
+            this.timerResetToNameAndNumber.Tick += new System.EventHandler(this.timerResetToNameAndNumber_Tick);
             // 
             // FrmPopup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 80);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.lbCopiedName);
-            this.Controls.Add(this.lbCopiedNumber);
+            this.ClientSize = new System.Drawing.Size(471, 43);
+            this.Controls.Add(this.lbClose);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbInOutCall);
             this.Controls.Add(this.tbNumber);
@@ -161,8 +138,7 @@
         private System.Windows.Forms.TextBox tbInOutCall;
         private System.Windows.Forms.Timer timerAutoClose;
         private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.Label lbCopiedNumber;
-        private System.Windows.Forms.Label lbCopiedName;
-        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lbClose;
+        private System.Windows.Forms.Timer timerResetToNameAndNumber;
     }
 }

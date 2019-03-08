@@ -5,9 +5,6 @@
     <Setting Name="SS_COM_PORT" Type="System.String" Scope="User">
       <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="POPUP_TIME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
-    </Setting>
     <Setting Name="POPUP_INBOUND" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -15,7 +12,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="USE_COMPUTER_TIME" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MAX_LINE_NUMBER" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
@@ -36,6 +33,18 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="USE_CUSTOM_POSITION" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="POPUP_TIME" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="RELAY_IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.0.0.0</Value>
+    </Setting>
+    <Setting Name="LOGGING_FILE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">none</Value>
+    </Setting>
+    <Setting Name="LOGGING" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

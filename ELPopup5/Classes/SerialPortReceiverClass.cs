@@ -20,14 +20,14 @@ namespace ELPopup5.Classes
 
         public SerialPortReceiverClass(string port_name)
         {
-            if (port_name == "None")
+            if (port_name == "None" || string.IsNullOrEmpty(port_name))
             {
                 COM_PORT = new SerialPort();
                 return;
             }
 
-            PORT_NAME = port_name;
-            COM_PORT = new SerialPort(port_name, 9600, Parity.None, 8, StopBits.One);
+            PORT_NAME = port_name.Replace(" (Unit Detected)", "");
+            COM_PORT = new SerialPort(PORT_NAME, 9600, Parity.None, 8, StopBits.One);
             OpenCOMPort();
         }
         
@@ -47,8 +47,8 @@ namespace ELPopup5.Classes
                 return;
             }
 
-            PORT_NAME = port_name;
-            COM_PORT = new SerialPort(port_name, 9600, Parity.None, 8, StopBits.One);
+            PORT_NAME = port_name.Replace(" (Unit Detected)", "");
+            COM_PORT = new SerialPort(PORT_NAME, 9600, Parity.None, 8, StopBits.One);
 
             OpenCOMPort();
 
@@ -61,8 +61,31 @@ namespace ELPopup5.Classes
                 COM_PORT.Close();
             }
 
-            COM_PORT.Open();
-            COM_PORT.DataReceived += ReadCOMPort;
+            try
+            {
+                COM_PORT.Open();
+                COM_PORT.DataReceived += ReadCOMPort;
+                Program.COM_PORT_BIND_FAILED = false;
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.ToString());
+                
+                if (!Program.COM_PORT_BIND_FAILED)
+                {
+                    Program.COM_PORT_BIND_FAILED = true;
+                    PORT_NAME = PORT_NAME + " in use";
+                    FrmTimerMsgBox msg = new FrmTimerMsgBox("COM PORT FAILED TO BIND", "Program already bound to ELPopup's selected COM port.", 4000);
+                    msg.ShowDialog();
+                }
+
+                if (COM_PORT.IsOpen)
+                {
+                    COM_PORT.Close();
+                }
+
+            }
+            
         }
 
         public void CloseCOMPort()

@@ -22,6 +22,7 @@ namespace ELPopup5
 
         public int ID;
         public int POS;
+        public int LineNumber = -1;
         public bool MouseIsHoving = false;
         public string TheNumber;
         public string USTRING;
@@ -31,6 +32,8 @@ namespace ELPopup5
         {
             InitializeComponent();
             timerAutoClose.Interval = Properties.Settings.Default.POPUP_TIME * 1000;
+
+            LineNumber = line;
 
             ID = id;
             POS = pos;
@@ -43,7 +46,6 @@ namespace ELPopup5
 
             if (isInbound)
             {
-                BackColor = Program.C_INCOMING_CALL_BACKGROUND;
                 ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
             }
             else
@@ -64,8 +66,7 @@ namespace ELPopup5
                 tbNumber.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
                 tbName.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
 
-                btnClose.BackColor = Program.C_INCOMING_CALL_FOREGROUND;
-                btnClose.ForeColor = Program.C_INCOMING_CALL_BACKGROUND;
+                lbClose.ForeColor = Program.C_INCOMING_CALL_FOREGROUND;
 
             }
             else
@@ -79,8 +80,7 @@ namespace ELPopup5
                 tbNumber.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
                 tbName.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
 
-                btnClose.BackColor = Program.C_OUTGOING_CALL_FOREGROUND;
-                btnClose.ForeColor = Program.C_OUTGOING_CALL_BACKGROUND;
+                lbClose.ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
             }
 
             tbNumber.Text = num;
@@ -93,6 +93,11 @@ namespace ELPopup5
 
         }
 
+        public void Reposition(int x, int y)
+        {
+            Location = new Point(x, y);
+        }
+
         public void CopyTextboxText(object sender, EventArgs e)
         {
             if (sender is TextBox)
@@ -101,17 +106,11 @@ namespace ELPopup5
                 if (string.IsNullOrEmpty(tb.Text)) return;
                 Clipboard.SetText(tb.Text);
                 string type = (tb.Name.ToLower().Contains("number")) ? "Number" : "Name";
-                
-                if(type == "Number")
-                {
-                    lbCopiedNumber.Visible = true;
-                    lbCopiedName.Visible = false;
-                }
-                else if(type == "Name")
-                {
-                    lbCopiedName.Visible = true;
-                    lbCopiedNumber.Visible = false;
-                }
+
+                tb.Text = "Copied";
+                timerResetToNameAndNumber.Interval = 1000;
+                timerResetToNameAndNumber.Enabled = true;
+                timerResetToNameAndNumber.Start();
             }
         }
 
@@ -152,6 +151,15 @@ namespace ELPopup5
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void timerResetToNameAndNumber_Tick(object sender, EventArgs e)
+        {
+            timerResetToNameAndNumber.Enabled = false;
+            timerResetToNameAndNumber.Stop();
+
+            tbName.Text = FullName;
+            tbNumber.Text = TheNumber;
         }
     }
 }

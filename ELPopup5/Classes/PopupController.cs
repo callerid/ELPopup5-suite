@@ -10,7 +10,7 @@ namespace cid_cm.Classes
     public class PopupController
     {
         public static int popups = 0;
-        public const int popupHeight = 84;
+        public const int popupHeight = 56;
         public List<FrmPopup> PopupsList;
         public string Number = "";
         public bool[] PosIsTaken;
@@ -25,17 +25,25 @@ namespace cid_cm.Classes
             PopupsList = new List<FrmPopup>();
             RepeatCheckingList = new List<string>();
 
-            PosIsTaken = new bool[4];
+            PosIsTaken = new bool[8];
             PosIsTaken[0] = false;
             PosIsTaken[1] = false;
             PosIsTaken[2] = false;
             PosIsTaken[3] = false;
+            PosIsTaken[4] = false;
+            PosIsTaken[5] = false;
+            PosIsTaken[6] = false;
+            PosIsTaken[7] = false;
 
-            PosY = new int[4];
+            PosY = new int[8];
             PosY[0] = 0;
             PosY[1] = popupHeight * 1;
             PosY[2] = popupHeight * 2;
             PosY[3] = popupHeight * 3;
+            PosY[4] = popupHeight * 4;
+            PosY[5] = popupHeight * 5;
+            PosY[6] = popupHeight * 6;
+            PosY[7] = popupHeight * 7;
 
         }
 
@@ -55,7 +63,7 @@ namespace cid_cm.Classes
                 return;
             }
 
-            if (popups > 4) return;
+            if (popups > 8) return;
 
             Random r = new Random();
             int uId = r.Next(0, 10000);
@@ -81,6 +89,8 @@ namespace cid_cm.Classes
             PopupsList[PopupsList.Count - 1].Show();
 
             popups++;
+
+            OrderPopups();
 
             foreach (FrmPopup p in PopupsList)
             {
@@ -138,6 +148,49 @@ namespace cid_cm.Classes
                 popups--;
             }
 
+        }
+
+        private void OrderPopups()
+        {
+            SortedList<int, int> PopupIDs = new SortedList<int, int>();
+            foreach(FrmPopup popup in PopupsList)
+            {
+                try
+                {
+                    PopupIDs.Add(popup.LineNumber, popup.ID);
+                }
+                catch(ArgumentException ex)
+                {
+                    Console.Write("Already in list: " + ex.ToString());
+                }
+            }
+            
+            // Popup ID's are now ordered by line number
+            int pos = 0;
+            foreach(int line_number in PopupIDs.Keys)
+            {
+
+                int index = GetIndexOfPopupWithID(PopupIDs[line_number]);
+
+                if (index == -1) continue;
+
+                PopupsList[index].Reposition(0, PosY[pos]);
+
+                pos++;
+
+            }
+
+        }
+
+        private int GetIndexOfPopupWithID(int id)
+        {
+            int index = 0;
+            foreach(FrmPopup popup in PopupsList)
+            {
+                if (popup.ID == id) return index;
+                index++;
+            }
+            return -1;
         }
     }
 }

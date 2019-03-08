@@ -37,18 +37,6 @@ namespace ELPopup5.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int POPUP_TIME {
-            get {
-                return ((int)(this["POPUP_TIME"]));
-            }
-            set {
-                this["POPUP_TIME"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool POPUP_INBOUND {
             get {
@@ -73,7 +61,7 @@ namespace ELPopup5.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool USE_COMPUTER_TIME {
             get {
                 return ((bool)(this["USE_COMPUTER_TIME"]));
@@ -164,6 +152,54 @@ namespace ELPopup5.Properties {
             }
             set {
                 this["USE_CUSTOM_POSITION"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int POPUP_TIME {
+            get {
+                return ((int)(this["POPUP_TIME"]));
+            }
+            set {
+                this["POPUP_TIME"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
+        public string RELAY_IP {
+            get {
+                return ((string)(this["RELAY_IP"]));
+            }
+            set {
+                this["RELAY_IP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("none")]
+        public string LOGGING_FILE {
+            get {
+                return ((string)(this["LOGGING_FILE"]));
+            }
+            set {
+                this["LOGGING_FILE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LOGGING {
+            get {
+                return ((bool)(this["LOGGING"]));
+            }
+            set {
+                this["LOGGING"] = value;
             }
         }
     }

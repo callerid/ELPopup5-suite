@@ -62,7 +62,38 @@ namespace ELPopup5.Classes
 
         public static void DeleteDatabase()
         {
-            if (File.Exists(DatabaseFile)) File.Delete(DatabaseFile);
+            if (File.Exists(DatabaseFile))
+            {
+                // Connect to database
+                SQLiteConnection myConnection = new SQLiteConnection();
+                myConnection.ConnectionString = @"Data Source=" + DatabaseFile;
+
+                // Log into log database
+                try
+                {
+                    myConnection.Open();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.ToString());
+                }
+
+                SQLiteCommand myCommand = new SQLiteCommand("DELETE FROM calls;", myConnection);
+                if (myConnection.State == ConnectionState.Open)
+                {
+                    myCommand.ExecuteNonQuery();
+                }
+
+                try
+                {
+                    myConnection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.ToString());
+                }
+            }
         }
 
         public static void AddCall(string line, string type, string indicator, string duration, string checksum, string rings, DateTime date, string number, string name, string id)
@@ -100,12 +131,20 @@ namespace ELPopup5.Classes
             }
         }
 
-        public static DataTable GetCallLog(int limit)
+        public static DataTable GetCallLog(int limit, string import_file = "none")
         {
 
             // Create connection to database
             SQLiteConnection myConnection = new SQLiteConnection();
-            myConnection.ConnectionString = @"Data Source=" + DatabaseFile;
+
+            if (import_file == "none")
+            {
+                myConnection.ConnectionString = @"Data Source=" + DatabaseFile;
+            }
+            else
+            {
+                myConnection.ConnectionString = @"Data Source=" + import_file;
+            }
 
             // Log into log database
             try
@@ -126,13 +165,30 @@ namespace ELPopup5.Classes
             rtn.Columns.Add("line");
             rtn.Columns.Add("io");
             rtn.Columns.Add("rings");
+            rtn.Columns.Add("type");
+            rtn.Columns.Add("checksum");
             rtn.Columns.Add("uid");
 
-            SQLiteCommand command = new SQLiteCommand("SELECT * FROM calls ORDER BY id DESC LIMIT " + limit + ";", myConnection);
+            string query = "SELECT * FROM calls ORDER BY DateAndTime DESC LIMIT " + limit + ";";
+
+            if (import_file != "none") query = "SELECT * FROM CallRecords ORDER BY Time DESC LIMIT " + limit + ";";
+
+            SQLiteCommand command = new SQLiteCommand(query, myConnection);
             SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+
+            if (import_file == "none")
             {
-                rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["UID"]);
+                while (reader.Read())
+                {
+                    rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["Type"], reader["Checksum"], reader["UID"]);
+                }
+            }
+            else
+            {
+                while (reader.Read())
+                {
+                    rtn.Rows.Add(reader["Name"].ToString(), reader["Phone"].ToString(), reader["Time"].ToString(), reader["Duration"].ToString(), reader["Line"].ToString(), (reader["Inbound"].ToString() == "1" ? "I" : "O"), "0", "I", "G", reader["UID"].ToString());
+                }
             }
 
             try

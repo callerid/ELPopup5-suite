@@ -13,3 +13,6 @@ F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\bin\Debug\System.Data.SQLit
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.csproj.CopyComplete
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmTimerMsgBox.resources
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmOptions.resources
+C:\Local VS Builds\ELPopup5\ELPopup5.exe.config
+C:\Local VS Builds\ELPopup5\ELPopup5.exe
+C:\Local VS Builds\ELPopup5\ELPopup5.pdb

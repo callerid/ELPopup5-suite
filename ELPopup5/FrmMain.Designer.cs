@@ -37,15 +37,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.dgvCallLog = new System.Windows.Forms.DataGridView();
-            this.dgvCallLogColDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColRings = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColSortDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbL1 = new System.Windows.Forms.Label();
             this.tbL1Number = new System.Windows.Forms.TextBox();
             this.tbL1Name = new System.Windows.Forms.TextBox();
@@ -91,6 +82,15 @@
             this.tbL9Name = new System.Windows.Forms.TextBox();
             this.lbL9 = new System.Windows.Forms.Label();
             this.lbHighLineNumber = new System.Windows.Forms.Label();
+            this.dgvCallLogColDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColRings = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColSortDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).BeginInit();
             this.SuspendLayout();
@@ -99,15 +99,14 @@
             // 
             this.dgvCallLog.AllowUserToAddRows = false;
             this.dgvCallLog.AllowUserToDeleteRows = false;
-            this.dgvCallLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvCallLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvCallLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCallLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCallLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvCallLogColDate,
-            this.dgvCallLogColName,
             this.dgvCallLogColNumber,
+            this.dgvCallLogColName,
             this.dgvCallLogColDuration,
             this.dgvCallLogColLine,
             this.dgvCallLogColIO,
@@ -133,80 +132,6 @@
             this.dgvCallLog.TabIndex = 0;
             this.dgvCallLog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dgvCallLog_MouseUp);
             // 
-            // dgvCallLogColDate
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColDate.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCallLogColDate.HeaderText = "Date and Time";
-            this.dgvCallLogColDate.Name = "dgvCallLogColDate";
-            this.dgvCallLogColDate.ReadOnly = true;
-            this.dgvCallLogColDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgvCallLogColDate.Width = 170;
-            // 
-            // dgvCallLogColName
-            // 
-            this.dgvCallLogColName.HeaderText = "Name";
-            this.dgvCallLogColName.Name = "dgvCallLogColName";
-            this.dgvCallLogColName.ReadOnly = true;
-            this.dgvCallLogColName.Width = 160;
-            // 
-            // dgvCallLogColNumber
-            // 
-            this.dgvCallLogColNumber.HeaderText = "Number";
-            this.dgvCallLogColNumber.Name = "dgvCallLogColNumber";
-            this.dgvCallLogColNumber.ReadOnly = true;
-            this.dgvCallLogColNumber.Width = 160;
-            // 
-            // dgvCallLogColDuration
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColDuration.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCallLogColDuration.HeaderText = "Duration";
-            this.dgvCallLogColDuration.Name = "dgvCallLogColDuration";
-            this.dgvCallLogColDuration.ReadOnly = true;
-            this.dgvCallLogColDuration.Width = 60;
-            // 
-            // dgvCallLogColLine
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColLine.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvCallLogColLine.HeaderText = "Line";
-            this.dgvCallLogColLine.Name = "dgvCallLogColLine";
-            this.dgvCallLogColLine.ReadOnly = true;
-            this.dgvCallLogColLine.Width = 38;
-            // 
-            // dgvCallLogColIO
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColIO.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvCallLogColIO.HeaderText = "IO";
-            this.dgvCallLogColIO.Name = "dgvCallLogColIO";
-            this.dgvCallLogColIO.ReadOnly = true;
-            this.dgvCallLogColIO.Width = 32;
-            // 
-            // dgvCallLogColRings
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColRings.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvCallLogColRings.HeaderText = "Rings";
-            this.dgvCallLogColRings.Name = "dgvCallLogColRings";
-            this.dgvCallLogColRings.ReadOnly = true;
-            this.dgvCallLogColRings.Width = 40;
-            // 
-            // dgvCallLogColSortDate
-            // 
-            this.dgvCallLogColSortDate.HeaderText = "Sortable Date";
-            this.dgvCallLogColSortDate.Name = "dgvCallLogColSortDate";
-            this.dgvCallLogColSortDate.ReadOnly = true;
-            this.dgvCallLogColSortDate.Visible = false;
-            // 
-            // dgvCallLogColUID
-            // 
-            this.dgvCallLogColUID.HeaderText = "UID";
-            this.dgvCallLogColUID.Name = "dgvCallLogColUID";
-            this.dgvCallLogColUID.ReadOnly = true;
-            this.dgvCallLogColUID.Visible = false;
-            // 
             // lbL1
             // 
             this.lbL1.AutoSize = true;
@@ -223,6 +148,7 @@
             this.tbL1Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL1Number.Location = new System.Drawing.Point(60, 27);
             this.tbL1Number.Name = "tbL1Number";
+            this.tbL1Number.ReadOnly = true;
             this.tbL1Number.Size = new System.Drawing.Size(153, 29);
             this.tbL1Number.TabIndex = 2;
             this.tbL1Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -234,6 +160,7 @@
             this.tbL1Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL1Name.Location = new System.Drawing.Point(219, 27);
             this.tbL1Name.Name = "tbL1Name";
+            this.tbL1Name.ReadOnly = true;
             this.tbL1Name.Size = new System.Drawing.Size(162, 29);
             this.tbL1Name.TabIndex = 3;
             this.tbL1Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -245,6 +172,7 @@
             this.tbL2Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL2Name.Location = new System.Drawing.Point(219, 62);
             this.tbL2Name.Name = "tbL2Name";
+            this.tbL2Name.ReadOnly = true;
             this.tbL2Name.Size = new System.Drawing.Size(162, 29);
             this.tbL2Name.TabIndex = 6;
             this.tbL2Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -256,6 +184,7 @@
             this.tbL2Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL2Number.Location = new System.Drawing.Point(60, 62);
             this.tbL2Number.Name = "tbL2Number";
+            this.tbL2Number.ReadOnly = true;
             this.tbL2Number.Size = new System.Drawing.Size(153, 29);
             this.tbL2Number.TabIndex = 5;
             this.tbL2Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -277,6 +206,7 @@
             this.tbL3Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL3Name.Location = new System.Drawing.Point(219, 97);
             this.tbL3Name.Name = "tbL3Name";
+            this.tbL3Name.ReadOnly = true;
             this.tbL3Name.Size = new System.Drawing.Size(162, 29);
             this.tbL3Name.TabIndex = 9;
             this.tbL3Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -288,6 +218,7 @@
             this.tbL3Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL3Number.Location = new System.Drawing.Point(60, 97);
             this.tbL3Number.Name = "tbL3Number";
+            this.tbL3Number.ReadOnly = true;
             this.tbL3Number.Size = new System.Drawing.Size(153, 29);
             this.tbL3Number.TabIndex = 8;
             this.tbL3Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -309,6 +240,7 @@
             this.tbL4Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL4Name.Location = new System.Drawing.Point(219, 132);
             this.tbL4Name.Name = "tbL4Name";
+            this.tbL4Name.ReadOnly = true;
             this.tbL4Name.Size = new System.Drawing.Size(162, 29);
             this.tbL4Name.TabIndex = 12;
             this.tbL4Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -320,6 +252,7 @@
             this.tbL4Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL4Number.Location = new System.Drawing.Point(60, 132);
             this.tbL4Number.Name = "tbL4Number";
+            this.tbL4Number.ReadOnly = true;
             this.tbL4Number.Size = new System.Drawing.Size(153, 29);
             this.tbL4Number.TabIndex = 11;
             this.tbL4Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -341,6 +274,7 @@
             this.tbL5Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL5Name.Location = new System.Drawing.Point(592, 27);
             this.tbL5Name.Name = "tbL5Name";
+            this.tbL5Name.ReadOnly = true;
             this.tbL5Name.Size = new System.Drawing.Size(162, 29);
             this.tbL5Name.TabIndex = 15;
             this.tbL5Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -353,6 +287,7 @@
             this.tbL5Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL5Number.Location = new System.Drawing.Point(433, 27);
             this.tbL5Number.Name = "tbL5Number";
+            this.tbL5Number.ReadOnly = true;
             this.tbL5Number.Size = new System.Drawing.Size(153, 29);
             this.tbL5Number.TabIndex = 14;
             this.tbL5Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -376,6 +311,7 @@
             this.tbL6Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL6Name.Location = new System.Drawing.Point(592, 62);
             this.tbL6Name.Name = "tbL6Name";
+            this.tbL6Name.ReadOnly = true;
             this.tbL6Name.Size = new System.Drawing.Size(162, 29);
             this.tbL6Name.TabIndex = 18;
             this.tbL6Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -388,6 +324,7 @@
             this.tbL6Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL6Number.Location = new System.Drawing.Point(433, 62);
             this.tbL6Number.Name = "tbL6Number";
+            this.tbL6Number.ReadOnly = true;
             this.tbL6Number.Size = new System.Drawing.Size(153, 29);
             this.tbL6Number.TabIndex = 17;
             this.tbL6Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -411,6 +348,7 @@
             this.tbL7Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL7Name.Location = new System.Drawing.Point(592, 97);
             this.tbL7Name.Name = "tbL7Name";
+            this.tbL7Name.ReadOnly = true;
             this.tbL7Name.Size = new System.Drawing.Size(162, 29);
             this.tbL7Name.TabIndex = 21;
             this.tbL7Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -423,6 +361,7 @@
             this.tbL7Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL7Number.Location = new System.Drawing.Point(433, 97);
             this.tbL7Number.Name = "tbL7Number";
+            this.tbL7Number.ReadOnly = true;
             this.tbL7Number.Size = new System.Drawing.Size(153, 29);
             this.tbL7Number.TabIndex = 20;
             this.tbL7Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -446,6 +385,7 @@
             this.tbL8Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL8Name.Location = new System.Drawing.Point(592, 132);
             this.tbL8Name.Name = "tbL8Name";
+            this.tbL8Name.ReadOnly = true;
             this.tbL8Name.Size = new System.Drawing.Size(162, 29);
             this.tbL8Name.TabIndex = 24;
             this.tbL8Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -458,6 +398,7 @@
             this.tbL8Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL8Number.Location = new System.Drawing.Point(433, 132);
             this.tbL8Number.Name = "tbL8Number";
+            this.tbL8Number.ReadOnly = true;
             this.tbL8Number.Size = new System.Drawing.Size(153, 29);
             this.tbL8Number.TabIndex = 23;
             this.tbL8Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -587,6 +528,7 @@
             this.tbL12Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL12Number.Location = new System.Drawing.Point(974, 130);
             this.tbL12Number.Name = "tbL12Number";
+            this.tbL12Number.ReadOnly = true;
             this.tbL12Number.Size = new System.Drawing.Size(162, 29);
             this.tbL12Number.TabIndex = 43;
             this.tbL12Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -598,6 +540,7 @@
             this.tbL12Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL12Name.Location = new System.Drawing.Point(815, 130);
             this.tbL12Name.Name = "tbL12Name";
+            this.tbL12Name.ReadOnly = true;
             this.tbL12Name.Size = new System.Drawing.Size(153, 29);
             this.tbL12Name.TabIndex = 42;
             this.tbL12Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -620,6 +563,7 @@
             this.tbL11Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL11Number.Location = new System.Drawing.Point(974, 95);
             this.tbL11Number.Name = "tbL11Number";
+            this.tbL11Number.ReadOnly = true;
             this.tbL11Number.Size = new System.Drawing.Size(162, 29);
             this.tbL11Number.TabIndex = 40;
             this.tbL11Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -631,6 +575,7 @@
             this.tbL11Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL11Name.Location = new System.Drawing.Point(815, 95);
             this.tbL11Name.Name = "tbL11Name";
+            this.tbL11Name.ReadOnly = true;
             this.tbL11Name.Size = new System.Drawing.Size(153, 29);
             this.tbL11Name.TabIndex = 39;
             this.tbL11Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -653,6 +598,7 @@
             this.tbL10Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL10Number.Location = new System.Drawing.Point(974, 60);
             this.tbL10Number.Name = "tbL10Number";
+            this.tbL10Number.ReadOnly = true;
             this.tbL10Number.Size = new System.Drawing.Size(162, 29);
             this.tbL10Number.TabIndex = 37;
             this.tbL10Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -664,6 +610,7 @@
             this.tbL10Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL10Name.Location = new System.Drawing.Point(815, 60);
             this.tbL10Name.Name = "tbL10Name";
+            this.tbL10Name.ReadOnly = true;
             this.tbL10Name.Size = new System.Drawing.Size(153, 29);
             this.tbL10Name.TabIndex = 36;
             this.tbL10Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -686,6 +633,7 @@
             this.tbL9Number.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL9Number.Location = new System.Drawing.Point(974, 25);
             this.tbL9Number.Name = "tbL9Number";
+            this.tbL9Number.ReadOnly = true;
             this.tbL9Number.Size = new System.Drawing.Size(162, 29);
             this.tbL9Number.TabIndex = 34;
             this.tbL9Number.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -697,6 +645,7 @@
             this.tbL9Name.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbL9Name.Location = new System.Drawing.Point(815, 25);
             this.tbL9Name.Name = "tbL9Name";
+            this.tbL9Name.ReadOnly = true;
             this.tbL9Name.Size = new System.Drawing.Size(153, 29);
             this.tbL9Name.TabIndex = 33;
             this.tbL9Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -724,6 +673,81 @@
             this.lbHighLineNumber.Size = new System.Drawing.Size(195, 17);
             this.lbHighLineNumber.TabIndex = 44;
             this.lbHighLineNumber.Text = "Line # Higher than 12 Detected";
+            this.lbHighLineNumber.Visible = false;
+            // 
+            // dgvCallLogColDate
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColDate.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCallLogColDate.HeaderText = "Date and Time";
+            this.dgvCallLogColDate.Name = "dgvCallLogColDate";
+            this.dgvCallLogColDate.ReadOnly = true;
+            this.dgvCallLogColDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgvCallLogColDate.Width = 170;
+            // 
+            // dgvCallLogColNumber
+            // 
+            this.dgvCallLogColNumber.HeaderText = "Number";
+            this.dgvCallLogColNumber.Name = "dgvCallLogColNumber";
+            this.dgvCallLogColNumber.ReadOnly = true;
+            this.dgvCallLogColNumber.Width = 160;
+            // 
+            // dgvCallLogColName
+            // 
+            this.dgvCallLogColName.HeaderText = "Name";
+            this.dgvCallLogColName.Name = "dgvCallLogColName";
+            this.dgvCallLogColName.ReadOnly = true;
+            this.dgvCallLogColName.Width = 160;
+            // 
+            // dgvCallLogColDuration
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColDuration.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCallLogColDuration.HeaderText = "Duration";
+            this.dgvCallLogColDuration.Name = "dgvCallLogColDuration";
+            this.dgvCallLogColDuration.ReadOnly = true;
+            this.dgvCallLogColDuration.Width = 60;
+            // 
+            // dgvCallLogColLine
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColLine.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCallLogColLine.HeaderText = "Line";
+            this.dgvCallLogColLine.Name = "dgvCallLogColLine";
+            this.dgvCallLogColLine.ReadOnly = true;
+            this.dgvCallLogColLine.Width = 38;
+            // 
+            // dgvCallLogColIO
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColIO.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCallLogColIO.HeaderText = "IO";
+            this.dgvCallLogColIO.Name = "dgvCallLogColIO";
+            this.dgvCallLogColIO.ReadOnly = true;
+            this.dgvCallLogColIO.Width = 32;
+            // 
+            // dgvCallLogColRings
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColRings.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvCallLogColRings.HeaderText = "Rings";
+            this.dgvCallLogColRings.Name = "dgvCallLogColRings";
+            this.dgvCallLogColRings.ReadOnly = true;
+            this.dgvCallLogColRings.Width = 40;
+            // 
+            // dgvCallLogColSortDate
+            // 
+            this.dgvCallLogColSortDate.HeaderText = "Sortable Date";
+            this.dgvCallLogColSortDate.Name = "dgvCallLogColSortDate";
+            this.dgvCallLogColSortDate.ReadOnly = true;
+            this.dgvCallLogColSortDate.Visible = false;
+            // 
+            // dgvCallLogColUID
+            // 
+            this.dgvCallLogColUID.HeaderText = "UID";
+            this.dgvCallLogColUID.Name = "dgvCallLogColUID";
+            this.dgvCallLogColUID.ReadOnly = true;
+            this.dgvCallLogColUID.Visible = false;
             // 
             // FrmMain
             // 
@@ -775,16 +799,11 @@
             this.Controls.Add(this.lbL1);
             this.Controls.Add(this.dgvCallLog);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(1171, 800);
-            this.MinimumSize = new System.Drawing.Size(765, 511);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Popup";
             this.Activated += new System.EventHandler(this.FrmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
-            this.Shown += new System.EventHandler(this.FrmMain_Shown);
-            this.LocationChanged += new System.EventHandler(this.FrmMain_LocationChanged);
-            this.SizeChanged += new System.EventHandler(this.FrmMain_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).EndInit();
             this.ResumeLayout(false);
@@ -825,15 +844,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Timer timerClearPreviousReceptions;
         private System.Windows.Forms.Label lbClearLog;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColDuration;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColLine;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColIO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColRings;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColSortDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColUID;
         internal System.Windows.Forms.ComboBox cbSearch;
         private System.Windows.Forms.Timer timerUpdateBoundTo;
         private System.Windows.Forms.TextBox tbL12Number;
@@ -849,6 +859,15 @@
         private System.Windows.Forms.TextBox tbL9Name;
         private System.Windows.Forms.Label lbL9;
         private System.Windows.Forms.Label lbHighLineNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColDuration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColLine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColIO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColRings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColSortDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColUID;
     }
 }
 

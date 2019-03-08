@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -27,7 +29,12 @@ namespace ELPopup5.Classes
                     foreach(TabPage tab in tc.TabPages)
                     {
                         tab.BackColor = Program.C_BACKGROUND;
-                        tab.ForeColor = Program.C_TEXT;
+                        tab.ForeColor = Color.Black;
+
+                        foreach(Control tcc in tab.Controls)
+                        {
+                            tcc.ForeColor = Color.Black;
+                        }
                     }
                 }
 
@@ -99,6 +106,45 @@ namespace ELPopup5.Classes
         {
             string new_date = d.Year.ToString() + "-" + d.Month.ToString().PadLeft(2, '0') + "-" + d.Day.ToString().PadLeft(2, '0') + " 01:00:00.000";
             return DateTime.ParseExact(new_date, "yyyy-MM-dd HH:mm:ss.fff", null);
+        }
+
+        public static void WaitFor(int milliSeconds)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < milliSeconds)
+            {
+                Application.DoEvents();
+            }
+            sw.Stop();
+        }
+
+        public static void AttmptWriteToLog(string text)
+        {
+            text = text.Substring(21);
+
+            if (Properties.Settings.Default.LOGGING_FILE == "none") return;
+            if (!Properties.Settings.Default.LOGGING) return;
+
+            if (File.Exists(Properties.Settings.Default.LOGGING_FILE))
+            {
+
+                string old = File.ReadAllText(Properties.Settings.Default.LOGGING_FILE);
+
+                string new_text = old + Environment.NewLine + text;
+
+                File.WriteAllText(Properties.Settings.Default.LOGGING_FILE, new_text);
+
+            }
+            else
+            {
+                File.WriteAllText(Properties.Settings.Default.LOGGING_FILE, text);
+            }
+        }
+
+        public static string FormatDateToExportCSVFormat(DateTime d)
+        {
+            return d.ToString("MM/dd hh:mm tt");
         }
 
     }
