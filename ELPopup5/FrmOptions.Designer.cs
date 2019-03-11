@@ -59,9 +59,11 @@
             this.lbTotalLogCount = new System.Windows.Forms.Label();
             this.btnExportRecords = new System.Windows.Forms.Button();
             this.tcTabsPageMisc = new System.Windows.Forms.TabPage();
+            this.ckbStartInSystemTray = new System.Windows.Forms.CheckBox();
+            this.btnImportOldDatabase = new System.Windows.Forms.Button();
             this.btnResetLineDisplay = new System.Windows.Forms.Button();
             this.sfdLoggingFile = new System.Windows.Forms.SaveFileDialog();
-            this.btnImportOldDatabase = new System.Windows.Forms.Button();
+            this.btnClearLog = new System.Windows.Forms.Button();
             this.tcTabs.SuspendLayout();
             this.tcTabsPageGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndPopupTiming)).BeginInit();
@@ -441,6 +443,8 @@
             // 
             // tcTabsPageMisc
             // 
+            this.tcTabsPageMisc.Controls.Add(this.btnClearLog);
+            this.tcTabsPageMisc.Controls.Add(this.ckbStartInSystemTray);
             this.tcTabsPageMisc.Controls.Add(this.btnImportOldDatabase);
             this.tcTabsPageMisc.Controls.Add(this.btnResetLineDisplay);
             this.tcTabsPageMisc.Location = new System.Drawing.Point(4, 30);
@@ -450,6 +454,28 @@
             this.tcTabsPageMisc.TabIndex = 2;
             this.tcTabsPageMisc.Text = "Misc.";
             this.tcTabsPageMisc.UseVisualStyleBackColor = true;
+            // 
+            // ckbStartInSystemTray
+            // 
+            this.ckbStartInSystemTray.AutoSize = true;
+            this.ckbStartInSystemTray.Location = new System.Drawing.Point(63, 38);
+            this.ckbStartInSystemTray.Name = "ckbStartInSystemTray";
+            this.ckbStartInSystemTray.Size = new System.Drawing.Size(230, 25);
+            this.ckbStartInSystemTray.TabIndex = 2;
+            this.ckbStartInSystemTray.Text = "Start ELPopup in System Tray";
+            this.ckbStartInSystemTray.UseVisualStyleBackColor = true;
+            this.ckbStartInSystemTray.CheckedChanged += new System.EventHandler(this.ckbStartInSystemTray_CheckedChanged);
+            // 
+            // btnImportOldDatabase
+            // 
+            this.btnImportOldDatabase.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImportOldDatabase.Location = new System.Drawing.Point(92, 135);
+            this.btnImportOldDatabase.Name = "btnImportOldDatabase";
+            this.btnImportOldDatabase.Size = new System.Drawing.Size(159, 31);
+            this.btnImportOldDatabase.TabIndex = 1;
+            this.btnImportOldDatabase.Text = "Import Old Database";
+            this.btnImportOldDatabase.UseVisualStyleBackColor = true;
+            this.btnImportOldDatabase.Click += new System.EventHandler(this.btnImportOldDatabase_Click);
             // 
             // btnResetLineDisplay
             // 
@@ -462,16 +488,16 @@
             this.btnResetLineDisplay.UseVisualStyleBackColor = true;
             this.btnResetLineDisplay.Click += new System.EventHandler(this.btnResetLineDisplay_Click);
             // 
-            // btnImportOldDatabase
+            // btnClearLog
             // 
-            this.btnImportOldDatabase.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImportOldDatabase.Location = new System.Drawing.Point(92, 135);
-            this.btnImportOldDatabase.Name = "btnImportOldDatabase";
-            this.btnImportOldDatabase.Size = new System.Drawing.Size(159, 31);
-            this.btnImportOldDatabase.TabIndex = 1;
-            this.btnImportOldDatabase.Text = "Import Old Database";
-            this.btnImportOldDatabase.UseVisualStyleBackColor = true;
-            this.btnImportOldDatabase.Click += new System.EventHandler(this.btnImportOldDatabase_Click);
+            this.btnClearLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearLog.Location = new System.Drawing.Point(60, 172);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(222, 31);
+            this.btnClearLog.TabIndex = 3;
+            this.btnClearLog.Text = "Delete all Call Records in Database";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
             // FrmOptions
             // 
@@ -500,6 +526,7 @@
             this.tcTabsPageLogging.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndRecordCount)).EndInit();
             this.tcTabsPageMisc.ResumeLayout(false);
+            this.tcTabsPageMisc.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -539,5 +566,7 @@
         private System.Windows.Forms.Button btnStopLogging;
         private System.Windows.Forms.Label lbLogStatus;
         private System.Windows.Forms.Button btnImportOldDatabase;
+        private System.Windows.Forms.CheckBox ckbStartInSystemTray;
+        private System.Windows.Forms.Button btnClearLog;
     }
 }

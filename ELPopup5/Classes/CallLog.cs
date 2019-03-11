@@ -64,6 +64,9 @@ namespace ELPopup5.Classes
         {
             if (File.Exists(DatabaseFile))
             {
+                // Backup
+                File.Copy(DatabaseFile, DatabaseFile.Replace(".db3", "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Second + ".db3"));
+
                 // Connect to database
                 SQLiteConnection myConnection = new SQLiteConnection();
                 myConnection.ConnectionString = @"Data Source=" + DatabaseFile;

@@ -37,6 +37,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.dgvCallLog = new System.Windows.Forms.DataGridView();
+            this.dgvCallLogColDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColRings = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColSortDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCallLogColUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbL1 = new System.Windows.Forms.Label();
             this.tbL1Number = new System.Windows.Forms.TextBox();
             this.tbL1Name = new System.Windows.Forms.TextBox();
@@ -66,7 +75,6 @@
             this.ndDisplayCount = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.timerClearPreviousReceptions = new System.Windows.Forms.Timer(this.components);
-            this.lbClearLog = new System.Windows.Forms.Label();
             this.cbSearch = new System.Windows.Forms.ComboBox();
             this.timerUpdateBoundTo = new System.Windows.Forms.Timer(this.components);
             this.tbL12Number = new System.Windows.Forms.TextBox();
@@ -82,15 +90,6 @@
             this.tbL9Name = new System.Windows.Forms.TextBox();
             this.lbL9 = new System.Windows.Forms.Label();
             this.lbHighLineNumber = new System.Windows.Forms.Label();
-            this.dgvCallLogColDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColRings = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColSortDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCallLogColUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).BeginInit();
             this.SuspendLayout();
@@ -131,6 +130,80 @@
             this.dgvCallLog.Size = new System.Drawing.Size(693, 245);
             this.dgvCallLog.TabIndex = 0;
             this.dgvCallLog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dgvCallLog_MouseUp);
+            // 
+            // dgvCallLogColDate
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColDate.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCallLogColDate.HeaderText = "Date and Time";
+            this.dgvCallLogColDate.Name = "dgvCallLogColDate";
+            this.dgvCallLogColDate.ReadOnly = true;
+            this.dgvCallLogColDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgvCallLogColDate.Width = 170;
+            // 
+            // dgvCallLogColNumber
+            // 
+            this.dgvCallLogColNumber.HeaderText = "Number";
+            this.dgvCallLogColNumber.Name = "dgvCallLogColNumber";
+            this.dgvCallLogColNumber.ReadOnly = true;
+            this.dgvCallLogColNumber.Width = 160;
+            // 
+            // dgvCallLogColName
+            // 
+            this.dgvCallLogColName.HeaderText = "Name";
+            this.dgvCallLogColName.Name = "dgvCallLogColName";
+            this.dgvCallLogColName.ReadOnly = true;
+            this.dgvCallLogColName.Width = 160;
+            // 
+            // dgvCallLogColDuration
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColDuration.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCallLogColDuration.HeaderText = "Duration";
+            this.dgvCallLogColDuration.Name = "dgvCallLogColDuration";
+            this.dgvCallLogColDuration.ReadOnly = true;
+            this.dgvCallLogColDuration.Width = 60;
+            // 
+            // dgvCallLogColLine
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColLine.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCallLogColLine.HeaderText = "Line";
+            this.dgvCallLogColLine.Name = "dgvCallLogColLine";
+            this.dgvCallLogColLine.ReadOnly = true;
+            this.dgvCallLogColLine.Width = 38;
+            // 
+            // dgvCallLogColIO
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColIO.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCallLogColIO.HeaderText = "IO";
+            this.dgvCallLogColIO.Name = "dgvCallLogColIO";
+            this.dgvCallLogColIO.ReadOnly = true;
+            this.dgvCallLogColIO.Width = 32;
+            // 
+            // dgvCallLogColRings
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvCallLogColRings.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvCallLogColRings.HeaderText = "Rings";
+            this.dgvCallLogColRings.Name = "dgvCallLogColRings";
+            this.dgvCallLogColRings.ReadOnly = true;
+            this.dgvCallLogColRings.Width = 40;
+            // 
+            // dgvCallLogColSortDate
+            // 
+            this.dgvCallLogColSortDate.HeaderText = "Sortable Date";
+            this.dgvCallLogColSortDate.Name = "dgvCallLogColSortDate";
+            this.dgvCallLogColSortDate.ReadOnly = true;
+            this.dgvCallLogColSortDate.Visible = false;
+            // 
+            // dgvCallLogColUID
+            // 
+            this.dgvCallLogColUID.HeaderText = "UID";
+            this.dgvCallLogColUID.Name = "dgvCallLogColUID";
+            this.dgvCallLogColUID.ReadOnly = true;
+            this.dgvCallLogColUID.Visible = false;
             // 
             // lbL1
             // 
@@ -479,18 +552,6 @@
             this.timerClearPreviousReceptions.Enabled = true;
             this.timerClearPreviousReceptions.Tick += new System.EventHandler(this.timerClearPreviousReceptions_Tick);
             // 
-            // lbClearLog
-            // 
-            this.lbClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbClearLog.AutoSize = true;
-            this.lbClearLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbClearLog.Location = new System.Drawing.Point(4, 452);
-            this.lbClearLog.Name = "lbClearLog";
-            this.lbClearLog.Size = new System.Drawing.Size(16, 17);
-            this.lbClearLog.TabIndex = 30;
-            this.lbClearLog.Text = "C";
-            this.lbClearLog.Click += new System.EventHandler(this.lbClearLog_Click);
-            // 
             // cbSearch
             // 
             this.cbSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -675,80 +736,6 @@
             this.lbHighLineNumber.Text = "Line # Higher than 12 Detected";
             this.lbHighLineNumber.Visible = false;
             // 
-            // dgvCallLogColDate
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColDate.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCallLogColDate.HeaderText = "Date and Time";
-            this.dgvCallLogColDate.Name = "dgvCallLogColDate";
-            this.dgvCallLogColDate.ReadOnly = true;
-            this.dgvCallLogColDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dgvCallLogColDate.Width = 170;
-            // 
-            // dgvCallLogColNumber
-            // 
-            this.dgvCallLogColNumber.HeaderText = "Number";
-            this.dgvCallLogColNumber.Name = "dgvCallLogColNumber";
-            this.dgvCallLogColNumber.ReadOnly = true;
-            this.dgvCallLogColNumber.Width = 160;
-            // 
-            // dgvCallLogColName
-            // 
-            this.dgvCallLogColName.HeaderText = "Name";
-            this.dgvCallLogColName.Name = "dgvCallLogColName";
-            this.dgvCallLogColName.ReadOnly = true;
-            this.dgvCallLogColName.Width = 160;
-            // 
-            // dgvCallLogColDuration
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColDuration.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCallLogColDuration.HeaderText = "Duration";
-            this.dgvCallLogColDuration.Name = "dgvCallLogColDuration";
-            this.dgvCallLogColDuration.ReadOnly = true;
-            this.dgvCallLogColDuration.Width = 60;
-            // 
-            // dgvCallLogColLine
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColLine.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvCallLogColLine.HeaderText = "Line";
-            this.dgvCallLogColLine.Name = "dgvCallLogColLine";
-            this.dgvCallLogColLine.ReadOnly = true;
-            this.dgvCallLogColLine.Width = 38;
-            // 
-            // dgvCallLogColIO
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColIO.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvCallLogColIO.HeaderText = "IO";
-            this.dgvCallLogColIO.Name = "dgvCallLogColIO";
-            this.dgvCallLogColIO.ReadOnly = true;
-            this.dgvCallLogColIO.Width = 32;
-            // 
-            // dgvCallLogColRings
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvCallLogColRings.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvCallLogColRings.HeaderText = "Rings";
-            this.dgvCallLogColRings.Name = "dgvCallLogColRings";
-            this.dgvCallLogColRings.ReadOnly = true;
-            this.dgvCallLogColRings.Width = 40;
-            // 
-            // dgvCallLogColSortDate
-            // 
-            this.dgvCallLogColSortDate.HeaderText = "Sortable Date";
-            this.dgvCallLogColSortDate.Name = "dgvCallLogColSortDate";
-            this.dgvCallLogColSortDate.ReadOnly = true;
-            this.dgvCallLogColSortDate.Visible = false;
-            // 
-            // dgvCallLogColUID
-            // 
-            this.dgvCallLogColUID.HeaderText = "UID";
-            this.dgvCallLogColUID.Name = "dgvCallLogColUID";
-            this.dgvCallLogColUID.ReadOnly = true;
-            this.dgvCallLogColUID.Visible = false;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -768,7 +755,6 @@
             this.Controls.Add(this.tbL9Name);
             this.Controls.Add(this.lbL9);
             this.Controls.Add(this.cbSearch);
-            this.Controls.Add(this.lbClearLog);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ndDisplayCount);
             this.Controls.Add(this.label5);
@@ -804,6 +790,7 @@
             this.Text = "Popup";
             this.Activated += new System.EventHandler(this.FrmMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.Click += new System.EventHandler(this.FrmMain_Click);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).EndInit();
             this.ResumeLayout(false);
@@ -843,7 +830,6 @@
         private System.Windows.Forms.NumericUpDown ndDisplayCount;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Timer timerClearPreviousReceptions;
-        private System.Windows.Forms.Label lbClearLog;
         internal System.Windows.Forms.ComboBox cbSearch;
         private System.Windows.Forms.Timer timerUpdateBoundTo;
         private System.Windows.Forms.TextBox tbL12Number;

@@ -147,5 +147,15 @@ namespace ELPopup5.Classes
             return d.ToString("MM/dd hh:mm tt");
         }
 
+        public static DialogResult MessageBox(string title, string message, bool use_btn1, DialogResult btn1_result_type, bool use_btn2, DialogResult btn2_result_type, bool use_btn3, DialogResult btn3_result_type, string btn1_text, string btn2_text, string btn3_text, int default_button)
+        {
+            DialogResult result;
+            using (var fMsgBox = new FrmMessageBox(title, Environment.NewLine + Environment.NewLine + message, use_btn1, btn1_result_type, use_btn2, btn2_result_type, use_btn3, btn3_result_type, btn1_text, btn2_text, btn3_text, default_button))
+            {
+                result = fMsgBox.ShowDialog();
+
+            }
+            return result;
+        }
     }
 }

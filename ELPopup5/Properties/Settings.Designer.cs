@@ -202,5 +202,17 @@ namespace ELPopup5.Properties {
                 this["LOGGING"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool START_MINIMIZED {
+            get {
+                return ((bool)(this["START_MINIMIZED"]));
+            }
+            set {
+                this["START_MINIMIZED"] = value;
+            }
+        }
     }
 }

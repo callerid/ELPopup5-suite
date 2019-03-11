@@ -70,8 +70,8 @@ namespace ELPopup5
 
         private void SysTrayMenuClose_Clicked(object sender, EventArgs e)
         {
-            Kill = true;
-            Close();
+            sys_tray_icon.Visible = false;
+            Application.Exit();
         }
 
         private void SysTrayMenuOptions_Clicked(object sender, EventArgs e)
@@ -115,9 +115,9 @@ namespace ELPopup5
 
             if (File.Exists(old_database))
             {
-                DialogResult r = MessageBox.Show(this, "Old ELPopup database found. Import call records into ELPopup 5?", "Import Old Database", MessageBoxButtons.YesNo);
-
-                if(r == DialogResult.Yes)
+                DialogResult import_result = Common.MessageBox("Import Old Database?", "Old ELPopup database found. Import those call records into ELPopup 5?", true, DialogResult.Yes, true, DialogResult.No, false, DialogResult.None, "Yes", "No", "", 1);
+                
+                if(import_result == DialogResult.Yes)
                 {
                     FrmOptions fOptTemp = new FrmOptions(true);
                     fOptTemp.ImportOldDatabase(old_database);
@@ -126,9 +126,9 @@ namespace ELPopup5
                 }
                 else
                 {
-                    DialogResult not_show_again = MessageBox.Show(this, "Do not try and import old database again?", "Do Not Show Message Again", MessageBoxButtons.YesNo);
+                    DialogResult not_show_again = Common.MessageBox("Remind Me?", "Remind me later to Import?", true, DialogResult.Yes, true, DialogResult.No, false, DialogResult.None, "Yes", "No", "", 1);
 
-                    if (not_show_again == DialogResult.Yes)
+                    if (not_show_again == DialogResult.No)
                     {
                         File.Move(old_database, old_database.Replace(".db3", "-skipped.db3"));
                     }
@@ -298,6 +298,8 @@ namespace ELPopup5
             Common.DrawColors(this, "ELPopup 5 - v." + Application.ProductVersion + "        UDP Listening on Port: " + UdpReceiverClass.BoundTo + "        " + serial_status);
 
             sys_tray_icon.Visible = true;
+
+            dgvCallLog.ClearSelection();
 
         }
 
@@ -873,6 +875,8 @@ namespace ELPopup5
             else
             {
                 sys_tray_icon.Visible = false;
+                Application.Exit();
+                return;
             }
 
         }
@@ -889,13 +893,6 @@ namespace ELPopup5
             FrmMain_Activated(null, null);
         }
         
-        private void lbClearLog_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Clear all calls from Database?", "Clear?", MessageBoxButtons.YesNo) == DialogResult.No) return;
-            CallLog.DeleteDatabase();
-            dgvCallLog.Rows.Clear();
-        }
-
         private void cbSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopulateCallLog();
@@ -972,5 +969,9 @@ namespace ELPopup5
 
         }
 
+        private void FrmMain_Click(object sender, EventArgs e)
+        {
+            PopulateCallLog();
+        }
     }
 }

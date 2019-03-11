@@ -54,7 +54,14 @@ namespace ELPopup5
             fMain = new FrmMain();
 
             // Launch main form
-            Application.Run(fMain);
+            if (Properties.Settings.Default.START_MINIMIZED)
+            {
+                Application.Run();
+            }
+            else
+            {
+                Application.Run(fMain);
+            }
 
         }
     }

@@ -101,6 +101,8 @@ namespace ELPopup5
                 cbRelayIP.Text = Properties.Settings.Default.RELAY_IP;
             }
 
+            ckbStartInSystemTray.Checked = Properties.Settings.Default.START_MINIMIZED;
+
             LoadingForm = false;
 
         }
@@ -295,8 +297,8 @@ namespace ELPopup5
                 // Export into CVS file format
                 export_string += Common.FormatDateToExportCSVFormat(the_date) + ",";
                 export_string += record["number"].ToString() + ",";
-                export_string += record["name"].ToString() + ",";
-                export_string += Common.ConvertDurationToTime(int.Parse(record["dur"].ToString())) + ",";
+                export_string += "\"" + record["name"].ToString() + "\",";
+                export_string += "\"" + Common.ConvertDurationToTime(int.Parse(record["dur"].ToString())) + "\",";
                 export_string += record["line"].ToString() + ",";
                 export_string += record["io"].ToString() + ",";
                 export_string += record["rings"].ToString();
@@ -306,6 +308,7 @@ namespace ELPopup5
             }
 
             SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = "Call_Log";
             sfd.Filter = "Comma Seperated File|*.csv";
 
             DialogResult r = sfd.ShowDialog();
@@ -362,5 +365,24 @@ namespace ELPopup5
 
         }
 
+        private void ckbStartInSystemTray_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.START_MINIMIZED = ckbStartInSystemTray.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void btnClearLog_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = Common.MessageBox("Clear All Call Records", "Are you sure you want to Delete All Call Records?", true, DialogResult.Cancel, true, DialogResult.Yes, false, DialogResult.None, "Cancel", "Yes", "", 1);
+
+            if (result == DialogResult.Cancel) return;
+            
+            CallLog.DeleteDatabase();
+
+            Program.fMain.Has_Activated = false;
+            Program.fMain.RefreshWindow();
+
+        }
     }
 }
