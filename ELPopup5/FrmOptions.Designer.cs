@@ -38,6 +38,7 @@
             this.ndPopupTiming = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.tcTabsPageSerialServer = new System.Windows.Forms.TabPage();
+            this.btnRefreshSerialList = new System.Windows.Forms.Button();
             this.lbSerialStatus = new System.Windows.Forms.Label();
             this.lbSerialServerConnection = new System.Windows.Forms.Label();
             this.picHelpCOMPort = new System.Windows.Forms.PictureBox();
@@ -59,11 +60,12 @@
             this.lbTotalLogCount = new System.Windows.Forms.Label();
             this.btnExportRecords = new System.Windows.Forms.Button();
             this.tcTabsPageMisc = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnClearLog = new System.Windows.Forms.Button();
             this.ckbStartInSystemTray = new System.Windows.Forms.CheckBox();
             this.btnImportOldDatabase = new System.Windows.Forms.Button();
             this.btnResetLineDisplay = new System.Windows.Forms.Button();
             this.sfdLoggingFile = new System.Windows.Forms.SaveFileDialog();
-            this.btnClearLog = new System.Windows.Forms.Button();
             this.tcTabs.SuspendLayout();
             this.tcTabsPageGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndPopupTiming)).BeginInit();
@@ -87,6 +89,7 @@
             this.tcTabs.SelectedIndex = 0;
             this.tcTabs.Size = new System.Drawing.Size(349, 264);
             this.tcTabs.TabIndex = 0;
+            this.tcTabs.SelectedIndexChanged += new System.EventHandler(this.tcTabs_SelectedIndexChanged);
             // 
             // tcTabsPageGeneral
             // 
@@ -186,6 +189,7 @@
             // 
             // tcTabsPageSerialServer
             // 
+            this.tcTabsPageSerialServer.Controls.Add(this.btnRefreshSerialList);
             this.tcTabsPageSerialServer.Controls.Add(this.lbSerialStatus);
             this.tcTabsPageSerialServer.Controls.Add(this.lbSerialServerConnection);
             this.tcTabsPageSerialServer.Controls.Add(this.picHelpCOMPort);
@@ -201,6 +205,17 @@
             this.tcTabsPageSerialServer.Text = "Serial Server";
             this.tcTabsPageSerialServer.UseVisualStyleBackColor = true;
             // 
+            // btnRefreshSerialList
+            // 
+            this.btnRefreshSerialList.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefreshSerialList.Location = new System.Drawing.Point(77, 88);
+            this.btnRefreshSerialList.Name = "btnRefreshSerialList";
+            this.btnRefreshSerialList.Size = new System.Drawing.Size(106, 26);
+            this.btnRefreshSerialList.TabIndex = 9;
+            this.btnRefreshSerialList.Text = "Refresh Search";
+            this.btnRefreshSerialList.UseVisualStyleBackColor = true;
+            this.btnRefreshSerialList.Click += new System.EventHandler(this.btnRefreshSerialList_Click);
+            // 
             // lbSerialStatus
             // 
             this.lbSerialStatus.AutoSize = true;
@@ -215,7 +230,7 @@
             // 
             this.lbSerialServerConnection.AutoSize = true;
             this.lbSerialServerConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbSerialServerConnection.Location = new System.Drawing.Point(72, 173);
+            this.lbSerialServerConnection.Location = new System.Drawing.Point(22, 128);
             this.lbSerialServerConnection.Name = "lbSerialServerConnection";
             this.lbSerialServerConnection.Size = new System.Drawing.Size(181, 16);
             this.lbSerialServerConnection.TabIndex = 1;
@@ -224,7 +239,7 @@
             // picHelpCOMPort
             // 
             this.picHelpCOMPort.Image = global::ELPopup5.Properties.Resources.HelpIcon;
-            this.picHelpCOMPort.Location = new System.Drawing.Point(300, 72);
+            this.picHelpCOMPort.Location = new System.Drawing.Point(302, 58);
             this.picHelpCOMPort.Name = "picHelpCOMPort";
             this.picHelpCOMPort.Size = new System.Drawing.Size(28, 29);
             this.picHelpCOMPort.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -234,7 +249,7 @@
             // picHelpRelayIP
             // 
             this.picHelpRelayIP.Image = global::ELPopup5.Properties.Resources.HelpIcon;
-            this.picHelpRelayIP.Location = new System.Drawing.Point(300, 118);
+            this.picHelpRelayIP.Location = new System.Drawing.Point(302, 184);
             this.picHelpRelayIP.Name = "picHelpRelayIP";
             this.picHelpRelayIP.Size = new System.Drawing.Size(28, 29);
             this.picHelpRelayIP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -248,7 +263,7 @@
             this.cbRelayIP.Items.AddRange(new object[] {
             "Do not Relay Data",
             "Entire LAN (255.255.255.255)"});
-            this.cbRelayIP.Location = new System.Drawing.Point(75, 118);
+            this.cbRelayIP.Location = new System.Drawing.Point(77, 184);
             this.cbRelayIP.Name = "cbRelayIP";
             this.cbRelayIP.Size = new System.Drawing.Size(219, 24);
             this.cbRelayIP.TabIndex = 4;
@@ -259,7 +274,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(10, 121);
+            this.label4.Location = new System.Drawing.Point(12, 187);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 16);
             this.label4.TabIndex = 3;
@@ -269,7 +284,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(4, 75);
+            this.label3.Location = new System.Drawing.Point(6, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 16);
             this.label3.TabIndex = 2;
@@ -280,7 +295,7 @@
             this.cbCOMPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCOMPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCOMPorts.FormattingEnabled = true;
-            this.cbCOMPorts.Location = new System.Drawing.Point(75, 72);
+            this.cbCOMPorts.Location = new System.Drawing.Point(77, 58);
             this.cbCOMPorts.Name = "cbCOMPorts";
             this.cbCOMPorts.Size = new System.Drawing.Size(219, 24);
             this.cbCOMPorts.TabIndex = 0;
@@ -443,6 +458,7 @@
             // 
             // tcTabsPageMisc
             // 
+            this.tcTabsPageMisc.Controls.Add(this.label5);
             this.tcTabsPageMisc.Controls.Add(this.btnClearLog);
             this.tcTabsPageMisc.Controls.Add(this.ckbStartInSystemTray);
             this.tcTabsPageMisc.Controls.Add(this.btnImportOldDatabase);
@@ -455,14 +471,38 @@
             this.tcTabsPageMisc.Text = "Misc.";
             this.tcTabsPageMisc.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(50, 177);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(139, 34);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Delete all Call Records\r\nfrom Database";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearLog.Location = new System.Drawing.Point(195, 179);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(56, 31);
+            this.btnClearLog.TabIndex = 3;
+            this.btnClearLog.Text = "Delete";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            // 
             // ckbStartInSystemTray
             // 
             this.ckbStartInSystemTray.AutoSize = true;
+            this.ckbStartInSystemTray.Checked = true;
+            this.ckbStartInSystemTray.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbStartInSystemTray.Location = new System.Drawing.Point(63, 38);
             this.ckbStartInSystemTray.Name = "ckbStartInSystemTray";
-            this.ckbStartInSystemTray.Size = new System.Drawing.Size(230, 25);
+            this.ckbStartInSystemTray.Size = new System.Drawing.Size(246, 25);
             this.ckbStartInSystemTray.TabIndex = 2;
-            this.ckbStartInSystemTray.Text = "Start ELPopup in System Tray";
+            this.ckbStartInSystemTray.Text = "Display Main Screen on Startup";
             this.ckbStartInSystemTray.UseVisualStyleBackColor = true;
             this.ckbStartInSystemTray.CheckedChanged += new System.EventHandler(this.ckbStartInSystemTray_CheckedChanged);
             // 
@@ -487,17 +527,6 @@
             this.btnResetLineDisplay.Text = "Reset Display Line Count";
             this.btnResetLineDisplay.UseVisualStyleBackColor = true;
             this.btnResetLineDisplay.Click += new System.EventHandler(this.btnResetLineDisplay_Click);
-            // 
-            // btnClearLog
-            // 
-            this.btnClearLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearLog.Location = new System.Drawing.Point(60, 172);
-            this.btnClearLog.Name = "btnClearLog";
-            this.btnClearLog.Size = new System.Drawing.Size(222, 31);
-            this.btnClearLog.TabIndex = 3;
-            this.btnClearLog.Text = "Delete all Call Records in Database";
-            this.btnClearLog.UseVisualStyleBackColor = true;
-            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
             // FrmOptions
             // 
@@ -568,5 +597,7 @@
         private System.Windows.Forms.Button btnImportOldDatabase;
         private System.Windows.Forms.CheckBox ckbStartInSystemTray;
         private System.Windows.Forms.Button btnClearLog;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnRefreshSerialList;
     }
 }

@@ -42,7 +42,7 @@
             // 
             this.tbNumber.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbNumber.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNumber.Location = new System.Drawing.Point(41, 4);
+            this.tbNumber.Location = new System.Drawing.Point(58, 4);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.ReadOnly = true;
             this.tbNumber.Size = new System.Drawing.Size(172, 32);
@@ -60,9 +60,9 @@
             this.tbInOutCall.Location = new System.Drawing.Point(3, 4);
             this.tbInOutCall.Name = "tbInOutCall";
             this.tbInOutCall.ReadOnly = true;
-            this.tbInOutCall.Size = new System.Drawing.Size(32, 32);
+            this.tbInOutCall.Size = new System.Drawing.Size(46, 32);
             this.tbInOutCall.TabIndex = 3;
-            this.tbInOutCall.Text = "L1";
+            this.tbInOutCall.Text = "L12";
             this.tbInOutCall.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbInOutCall.WordWrap = false;
             this.tbInOutCall.MouseLeave += new System.EventHandler(this.FrmPopup_MouseLeave);
@@ -78,7 +78,7 @@
             // 
             this.tbName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbName.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(219, 4);
+            this.tbName.Location = new System.Drawing.Point(236, 4);
             this.tbName.Name = "tbName";
             this.tbName.ReadOnly = true;
             this.tbName.Size = new System.Drawing.Size(218, 32);
@@ -94,7 +94,7 @@
             this.lbClose.AutoSize = true;
             this.lbClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbClose.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbClose.Location = new System.Drawing.Point(443, 4);
+            this.lbClose.Location = new System.Drawing.Point(460, 4);
             this.lbClose.Name = "lbClose";
             this.lbClose.Size = new System.Drawing.Size(20, 21);
             this.lbClose.TabIndex = 7;
@@ -111,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 43);
+            this.ClientSize = new System.Drawing.Size(484, 43);
             this.Controls.Add(this.lbClose);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbInOutCall);

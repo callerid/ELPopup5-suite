@@ -136,7 +136,6 @@ namespace ELPopup5.Classes
 
         public static DataTable GetCallLog(int limit, string import_file = "none")
         {
-
             // Create connection to database
             SQLiteConnection myConnection = new SQLiteConnection();
 
@@ -176,28 +175,35 @@ namespace ELPopup5.Classes
 
             if (import_file != "none") query = "SELECT * FROM CallRecords ORDER BY Time DESC LIMIT " + limit + ";";
 
-            SQLiteCommand command = new SQLiteCommand(query, myConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(query, myConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
 
-            if (import_file == "none")
-            {
-                while (reader.Read())
+                if (import_file == "none")
                 {
-                    rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["Type"], reader["Checksum"], reader["UID"]);
+                    while (reader.Read())
+                    {
+                        rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["Type"], reader["Checksum"], reader["UID"]);
+                    }
+                }
+                else
+                {
+                    while (reader.Read())
+                    {
+                        rtn.Rows.Add(reader["Name"].ToString(), reader["Phone"].ToString(), reader["Time"].ToString(), reader["Duration"].ToString(), reader["Line"].ToString(), (reader["Inbound"].ToString() == "1" ? "I" : "O"), "0", "I", "G", reader["UID"].ToString());
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                while (reader.Read())
-                {
-                    rtn.Rows.Add(reader["Name"].ToString(), reader["Phone"].ToString(), reader["Time"].ToString(), reader["Duration"].ToString(), reader["Line"].ToString(), (reader["Inbound"].ToString() == "1" ? "I" : "O"), "0", "I", "G", reader["UID"].ToString());
-                }
+                Console.Write(ex.ToString());
             }
+            
 
             try
             {
                 myConnection.Close();
-
             }
             catch (Exception ex)
             {
@@ -296,8 +302,8 @@ namespace ELPopup5.Classes
 
                 default:
 
+                    filter = Common.MakeStringSqlSafe(filter);
                     query = "SELECT * FROM calls WHERE Name LIKE '%" + filter + "%' OR Number LIKE '%" + filter + "%' LIMIT " + limit + ";";
-
                     break;
 
 
@@ -329,6 +335,8 @@ namespace ELPopup5.Classes
             rtn.Columns.Add("uid");
 
             SQLiteCommand command = new SQLiteCommand(query, myConnection);
+            command.CommandText = query;
+            
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -347,6 +355,51 @@ namespace ELPopup5.Classes
 
             return rtn;
 
+        }
+
+        public static string GetNameFromNumberInDatabase(string phone_number)
+        {
+            // Create connection to database
+            SQLiteConnection myConnection = new SQLiteConnection();
+            myConnection.ConnectionString = @"Data Source=" + DatabaseFile;
+
+            // Log into log database
+            try
+            {
+                myConnection.Open();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
+            DataTable rtn = new DataTable();
+            rtn.Columns.Add("name");
+
+            string query = "SELECT * FROM calls WHERE TRIM(Number) = '" + phone_number + "' OR TRIM(Number) = '" + Common.FormatPhoneNumber(phone_number) + "';";
+
+            SQLiteCommand command = new SQLiteCommand(query, myConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            string name = "";
+            while (reader.Read())
+            {
+                name = reader["Name"].ToString();
+                if (!string.IsNullOrEmpty(name)) break;
+            }
+
+            try
+            {
+                myConnection.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.ToString());
+            }
+
+            return name;
         }
     }
 }

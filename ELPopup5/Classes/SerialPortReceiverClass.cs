@@ -56,6 +56,7 @@ namespace ELPopup5.Classes
 
         public void OpenCOMPort()
         {
+            if (string.IsNullOrEmpty(PORT_NAME) || PORT_NAME == "None") return;
             if (COM_PORT.IsOpen)
             {
                 COM_PORT.Close();
@@ -75,7 +76,7 @@ namespace ELPopup5.Classes
                 {
                     Program.COM_PORT_BIND_FAILED = true;
                     PORT_NAME = PORT_NAME + " in use";
-                    FrmTimerMsgBox msg = new FrmTimerMsgBox("COM PORT FAILED TO BIND", "Program already bound to ELPopup's selected COM port.", 4000);
+                    FrmTimerMsgBox msg = new FrmTimerMsgBox("COM PORT FAILED TO BIND", "Another Program is using the COM port selected.", 20000);
                     msg.ShowDialog();
                 }
 

@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Data.SQLite;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -144,7 +145,7 @@ namespace ELPopup5.Classes
 
         public static string FormatDateToExportCSVFormat(DateTime d)
         {
-            return d.ToString("MM/dd hh:mm tt");
+            return d.ToString("MM/dd/yyyy hh:mm tt");
         }
 
         public static DialogResult MessageBox(string title, string message, bool use_btn1, DialogResult btn1_result_type, bool use_btn2, DialogResult btn2_result_type, bool use_btn3, DialogResult btn3_result_type, string btn1_text, string btn2_text, string btn3_text, int default_button)
@@ -156,6 +157,122 @@ namespace ELPopup5.Classes
 
             }
             return result;
+        }
+
+        public static string FormatPhoneNumber(string text)
+        {
+            var simpleNumber = "";
+
+            foreach (var c in text)
+            {
+                if (char.IsDigit(c))
+                {
+                    simpleNumber += c;
+                }
+            }
+
+            var formatted = false;
+            if (simpleNumber.Length == 10)
+            {
+                simpleNumber = simpleNumber.Substring(0, 3) + @"-" + simpleNumber.Substring(3, 3) + @"-" +
+                               simpleNumber.Substring(6, 4);
+                formatted = true;
+            }
+            else if(simpleNumber.Length == 11)
+            {
+                simpleNumber = simpleNumber.Substring(1, 3) + @"-" + simpleNumber.Substring(4, 3) + @"-" +
+                               simpleNumber.Substring(7, 4);
+                formatted = true;
+            }
+
+            if (string.IsNullOrEmpty(simpleNumber))
+            {
+                return "";
+            }
+
+            return formatted ? simpleNumber : text;
+
+        }
+
+        public static string MakeStringSqlSafe(string unsafeString)
+        {
+            return unsafeString.Replace("\'", "&#39;").Replace("%%", "&#37;");
+        }
+
+        // Convert safe string back to display string
+        public static string GetUnsafeSqlString(string safeString)
+        {
+            return safeString.Replace("&#39;", "\'").Replace("&#37;", "%%");
+        }
+
+        public static void SaveSettings()
+        {
+            Properties.Settings.Default.Save();
+
+            if (!Directory.Exists(Program.ConfigFile.Replace("config.dat", "")))
+            {
+                Directory.CreateDirectory(Program.ConfigFile.Replace("config.dat", ""));
+            }
+
+            List<string> output = new List<string>();
+
+            foreach (SettingsProperty currentProperty in Properties.Settings.Default.Properties)
+            {
+                output.Add(Properties.Settings.Default[currentProperty.Name].ToString());
+            }
+
+            File.WriteAllLines(Program.ConfigFile, output.ToArray());
+
+        }
+
+        public static void LoadSettings()
+        {
+            List<string> settings = new List<string>();
+            if (File.Exists(Program.ConfigFile))
+            {
+                string[] read = File.ReadAllLines(Program.ConfigFile);
+
+                foreach(string r in read)
+                {
+                    settings.Add(r);
+                }
+
+                int index = 0;
+                foreach (SettingsProperty currentProperty in Properties.Settings.Default.Properties)
+                {
+                    int boolean_setting = -1;
+                    if (settings[index] == "True" || settings[index] == "False")
+                    {
+                        boolean_setting = settings[index] == "True" ? 1 : 0;
+                    }
+
+                    if(boolean_setting == -1)
+                    {
+                        int parsed_int;
+                        bool is_int = int.TryParse(settings[index], out parsed_int);
+
+                        if (is_int)
+                        {
+                            Properties.Settings.Default[currentProperty.Name] = parsed_int;
+                        }
+                        else
+                        {
+                            Properties.Settings.Default[currentProperty.Name] = settings[index];
+                        }
+                    }
+                    else
+                    {
+                        Properties.Settings.Default[currentProperty.Name] = Boolean.Parse(settings[index]);
+                    }
+                    
+                    index++;
+                }
+            }
+            else
+            {
+                SaveSettings();
+            }
+
         }
     }
 }

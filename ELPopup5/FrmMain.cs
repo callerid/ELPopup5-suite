@@ -65,7 +65,8 @@ namespace ELPopup5
         private void SysTrayMenuOpen_Clicked(object sender, EventArgs e)
         {
             Has_Activated = false;
-            this.Show();
+            Show();
+            WindowState = FormWindowState.Normal;
         }
 
         private void SysTrayMenuClose_Clicked(object sender, EventArgs e)
@@ -179,7 +180,7 @@ namespace ELPopup5
                 case -1:
                     UnHideLines(Lines.OneThroughFour, true);
                     Properties.Settings.Default.MAX_LINE_NUMBER = 4;
-                    Properties.Settings.Default.Save();
+                    Common.SaveSettings();
                     break;
                 case 4:
                     UnHideLines(Lines.OneThroughFour, true);
@@ -236,6 +237,7 @@ namespace ELPopup5
                 catch (Exception ex)
                 {
                     Console.Write(ex.ToString());
+                    found_text = " (Another app using COM Port)";
                 }
 
                 Program.COM_PORTS.Add(port_name + found_text);
@@ -245,7 +247,7 @@ namespace ELPopup5
             if(found_port_name != "" && found_port_name != "None")
             {
                 Properties.Settings.Default.SS_COM_PORT = found_port_name;
-                Properties.Settings.Default.Save();
+                Common.SaveSettings();
             }
 
             SerialReceiver = new SerialPortReceiverClass(Properties.Settings.Default.SS_COM_PORT);          
@@ -268,12 +270,18 @@ namespace ELPopup5
             sys_tray_menu_options.Click += new EventHandler(SysTrayMenuOptions_Clicked);
             sys_tray_menu.Items.Add(sys_tray_menu_options);
 
+            ToolStripMenuItem sys_tray_menu_user_manual = new ToolStripMenuItem();
+            sys_tray_menu_user_manual.Text = "User Manual";
+            sys_tray_menu_user_manual.Click += new EventHandler(SysTrayMenuClose_Clicked);
+            sys_tray_menu.Items.Add(sys_tray_menu_user_manual);
+
             ToolStripMenuItem sys_tray_menu_close = new ToolStripMenuItem();
-            sys_tray_menu_close.Text = "Close";
+            sys_tray_menu_close.Text = "Close ELPopup";
             sys_tray_menu_close.Click += new EventHandler(SysTrayMenuClose_Clicked);
             sys_tray_menu.Items.Add(sys_tray_menu_close);
 
             sys_tray_icon.ContextMenuStrip = sys_tray_menu;
+            sys_tray_icon.Text = "ELPopup 5";
 
             // Initialize popup controller
             pController = new PopupController();
@@ -300,6 +308,8 @@ namespace ELPopup5
             sys_tray_icon.Visible = true;
 
             dgvCallLog.ClearSelection();
+
+            ndDisplayCount.Value = Properties.Settings.Default.DISPLAY_RECORD_COUNT;
 
         }
 
@@ -376,36 +386,42 @@ namespace ELPopup5
                 lbHighLineNumber.Visible = true;
             }
 
+            string outbound_name = "";
+            if (call_record.IsOutbound())
+            {
+                outbound_name = CallLog.GetNameFromNumberInDatabase(call_record.PhoneNumber);
+            }
+
             // Show popup
             if (call_record.IsStartRecord() && !line_number_too_high)
             {
-                pController.AddPopup(call_record.Line, call_record.IsInbound(), call_record.PhoneNumber, call_record.Name);
+                pController.AddPopup(call_record.Line, call_record.IsInbound(), call_record.PhoneNumber, (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name));
                 PreviousPacketWasOutbound = !call_record.IsInbound();
+
             }
             else if (call_record.IsEndRecord())
             {
-                PreviousPacketWasOutbound = false;
+                PreviousPacketWasOutbound = false;                
+            }
 
-                if(call_record.IsInbound() && Properties.Settings.Default.POPUP_INBOUND)
-                {
-                    PreviousCall.Line = call_record.Line;
-                    PreviousCall.Number = call_record.PhoneNumber;
-                    PreviousCall.Name = call_record.Name;
-                    PreviousCall.IsInbound = true;
-                }
-                else if(call_record.IsOutbound() && Properties.Settings.Default.POPUP_OUTBOUND)
-                {
-                    PreviousCall.Line = call_record.Line;
-                    PreviousCall.Number = call_record.PhoneNumber;
-                    PreviousCall.Name = call_record.Name;
-                    PreviousCall.IsInbound = false;
-                }
-                
+            if (call_record.IsInbound() && Properties.Settings.Default.POPUP_INBOUND)
+            {
+                PreviousCall.Line = call_record.Line;
+                PreviousCall.Number = call_record.PhoneNumber;
+                PreviousCall.Name = (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name);
+                PreviousCall.IsInbound = true;
+            }
+            else if (call_record.IsOutbound() && Properties.Settings.Default.POPUP_OUTBOUND)
+            {
+                PreviousCall.Line = call_record.Line;
+                PreviousCall.Number = call_record.PhoneNumber;
+                PreviousCall.Name = (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name);
+                PreviousCall.IsInbound = false;
             }
 
             if (call_record.Detailed && call_record.DetailedType == "N")
             {
-                var uString = call_record.Line + " " + (call_record.IsInbound() ? "1" : "0") + " " + call_record.PhoneNumber + " " + call_record.Name;
+                string uString = call_record.Line + " " + (call_record.IsInbound() ? "1" : "0") + " " + call_record.PhoneNumber + " " + (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name);
                 pController.RemovePopup(uString);
             }
 
@@ -422,7 +438,7 @@ namespace ELPopup5
             {
                 if (!call_record.Detailed && call_record.IsStartRecord())
                 {
-                    AddToCallLog(call_record.Name, call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
+                    AddToCallLog((string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name), call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
                 }
 
                 return;
@@ -484,21 +500,21 @@ namespace ELPopup5
                             tbNumbers[call_record.Line].ForeColor = Program.C_OUTGOING_CALL_FOREGROUND;
                         }
 
-                        AddToCallLog(call_record.Name, call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
+                        AddToCallLog((string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name), call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
 
                     }
                 }
                 
-                tbNames[call_record.Line].Text = call_record.Name.Trim();
+                tbNames[call_record.Line].Text = (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name).Trim();
                 tbNumbers[call_record.Line].Text = call_record.PhoneNumber.Trim();
             }
 
             if (call_record.IsEndRecord())
             {
-                AddToCallLog(call_record.Name, call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
+                AddToCallLog((string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name), call_record.PhoneNumber, call_record.DateTime, call_record.Duration, call_record.Line, call_record.InboundOrOutboundOrBlock, call_record.RingNumber.ToString(), call_record.IsEndRecord(), call_record.UniqueID, call_record.Reception_String);
 
                 CallLog.AddCall(call_record.Line.ToString(), call_record.StartOrEnd, call_record.InboundOrOutboundOrBlock, call_record.Duration.ToString().PadLeft(4, '0'), call_record.CheckSum,
-                        call_record.RingNumber.ToString(), call_record.DateTime, call_record.PhoneNumber, call_record.Name, call_record.UniqueID);
+                        call_record.RingNumber.ToString(), call_record.DateTime, call_record.PhoneNumber, (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name), call_record.UniqueID);
 
                 if(Program.fOptions != null)
                 {
@@ -620,7 +636,7 @@ namespace ELPopup5
                 if (Properties.Settings.Default.MAX_LINE_NUMBER < 4)
                 {
                     Properties.Settings.Default.MAX_LINE_NUMBER = 4;
-                    Properties.Settings.Default.Save();
+                    Common.SaveSettings();
                 }
 
             }
@@ -637,7 +653,7 @@ namespace ELPopup5
                 if (Properties.Settings.Default.MAX_LINE_NUMBER < 8)
                 {
                     Properties.Settings.Default.MAX_LINE_NUMBER = 8;
-                    Properties.Settings.Default.Save();
+                    Common.SaveSettings();
                 }
 
             }
@@ -654,7 +670,7 @@ namespace ELPopup5
                 if (Properties.Settings.Default.MAX_LINE_NUMBER < 12)
                 {
                     Properties.Settings.Default.MAX_LINE_NUMBER = 12;
-                    Properties.Settings.Default.Save();
+                    Common.SaveSettings();
                 }
 
             }
@@ -710,7 +726,7 @@ namespace ELPopup5
 
             string month = d.Month.ToString().PadLeft(2, '0');
             string day = d.Day.ToString().PadLeft(2, '0');
-            string year = DateTime.Now.Year.ToString();
+            string year = d.Year.ToString();
             int hrs = d.Hour;
             string mins = d.Minute.ToString().PadLeft(2, '0');
 
@@ -765,7 +781,10 @@ namespace ELPopup5
                 DateTime the_date = Common.GetDateTimeFromSQLiteDate(call["time"].ToString());
 
                 dgvCallLog.Rows.Add();
-                dgvCallLog.Rows[dgvCallLog.Rows.Count - 1].Cells[DGV_LOG_NAME].Value = call["name"].ToString();
+
+                string name_str = call["name"].ToString();
+                dgvCallLog.Rows[dgvCallLog.Rows.Count - 1].Cells[DGV_LOG_NAME].Value = Common.GetUnsafeSqlString(name_str);
+
                 dgvCallLog.Rows[dgvCallLog.Rows.Count - 1].Cells[DGV_LOG_NUMBER].Value = call["number"].ToString();
                 dgvCallLog.Rows[dgvCallLog.Rows.Count - 1].Cells[DGV_LOG_DATE].Value = GetDateTimeWithoutSeconds(the_date);
                 dgvCallLog.Rows[dgvCallLog.Rows.Count - 1].Cells[DGV_LOG_DUR].Value = Common.ConvertDurationToTime(int.Parse(call["dur"].ToString()));
@@ -786,6 +805,8 @@ namespace ELPopup5
 
         private void ndDisplayCount_Leave(object sender, EventArgs e)
         {
+            Properties.Settings.Default.DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
+            Common.SaveSettings();
             PopulateCallLog();
         }
         
@@ -804,6 +825,7 @@ namespace ELPopup5
                 ListSortDirection sort = DateSortAsc ? ListSortDirection.Ascending : ListSortDirection.Descending;
                 DateSortAsc = !DateSortAsc;
                 dgvCallLog.Sort(dgvCallLogColSortDate, sort);
+                dgvCallLog.ClearSelection();
 
             }
 
@@ -857,7 +879,9 @@ namespace ELPopup5
             Properties.Settings.Default.MAIN_WINDOW_X = Location.X;
             Properties.Settings.Default.MAIN_WINDOW_Y = Location.Y;
 
-            Properties.Settings.Default.Save();
+            Properties.Settings.Default.DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
+
+            Common.SaveSettings();
 
             if(e.CloseReason == CloseReason.WindowsShutDown)
             {
@@ -946,7 +970,7 @@ namespace ELPopup5
                     case -1:
                         UnHideLines(Lines.OneThroughFour, true);
                         Properties.Settings.Default.MAX_LINE_NUMBER = 4;
-                        Properties.Settings.Default.Save();
+                        Common.SaveSettings();
                         break;
                     case 4:
                         UnHideLines(Lines.OneThroughFour, true);

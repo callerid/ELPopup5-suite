@@ -14,9 +14,12 @@ namespace ELPopup5
         public static FrmMain fMain = null;
         public static FrmOptions fOptions = null;
 
+        // File paths
+        public static string ConfigFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\config.dat";
+
         // Colors
         public static Color C_BACKGROUND = Color.FromArgb(214, 225, 235);
-        public static Color C_TEXT = Color.FromArgb(74, 92, 109);
+        public static Color C_TEXT = Color.Black;
         public static Color C_INCOMING_CALL_BACKGROUND = Color.WhiteSmoke;
         public static Color C_INCOMING_CALL_FOREGROUND = Color.FromArgb(31, 152, 41);
 
@@ -32,6 +35,9 @@ namespace ELPopup5
         [STAThread]
         static void Main()
         {
+
+            // Load properties
+            Common.LoadSettings();
 
             // Create Database if needed
             CallLog.CreateDatabase();

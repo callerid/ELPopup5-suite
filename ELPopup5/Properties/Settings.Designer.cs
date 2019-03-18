@@ -157,7 +157,7 @@ namespace ELPopup5.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int POPUP_TIME {
             get {
                 return ((int)(this["POPUP_TIME"]));
@@ -205,13 +205,25 @@ namespace ELPopup5.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool START_MINIMIZED {
             get {
                 return ((bool)(this["START_MINIMIZED"]));
             }
             set {
                 this["START_MINIMIZED"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int DISPLAY_RECORD_COUNT {
+            get {
+                return ((int)(this["DISPLAY_RECORD_COUNT"]));
+            }
+            set {
+                this["DISPLAY_RECORD_COUNT"] = value;
             }
         }
     }

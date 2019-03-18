@@ -36,7 +36,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="POPUP_TIME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="RELAY_IP" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.0.0.0</Value>
@@ -48,7 +48,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="START_MINIMIZED" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DISPLAY_RECORD_COUNT" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
     </Setting>
   </Settings>
 </SettingsFile>

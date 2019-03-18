@@ -12,7 +12,7 @@ namespace ELPopup5
 {
     public partial class FrmTimerMsgBox : Form
     {
-        public FrmTimerMsgBox(string title, string msg, int milliseconds = 1500)
+        public FrmTimerMsgBox(string title, string msg, int milliseconds = 1500, bool disable_button = false)
         {
             InitializeComponent();
             Common.DrawColors(this, title);
@@ -23,6 +23,8 @@ namespace ELPopup5
 
             timerAutoClose.Interval = milliseconds;
             timerAutoClose.Start();
+
+            if (disable_button) btnClose.Visible = false;
 
         }
 

@@ -86,6 +86,9 @@ namespace ELPopup5
                 cbCOMPorts.SelectedIndex = 0;
             }
 
+            ckbInboundCalls.Checked = Properties.Settings.Default.POPUP_INBOUND;
+            ckbOutboundCalls.Checked = Properties.Settings.Default.POPUP_OUTBOUND;
+
             ndPopupTiming.Value = Properties.Settings.Default.POPUP_TIME;
 
             if (Properties.Settings.Default.RELAY_IP.Contains("0.0.0.0"))
@@ -101,7 +104,7 @@ namespace ELPopup5
                 cbRelayIP.Text = Properties.Settings.Default.RELAY_IP;
             }
 
-            ckbStartInSystemTray.Checked = Properties.Settings.Default.START_MINIMIZED;
+            ckbStartInSystemTray.Checked = !Properties.Settings.Default.START_MINIMIZED;
 
             LoadingForm = false;
 
@@ -110,8 +113,8 @@ namespace ELPopup5
         private void cbCOMPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            Properties.Settings.Default.SS_COM_PORT = Program.COM_PORTS[cbCOMPorts.SelectedIndex].Replace(" (Unit Detected)", "");
-            Properties.Settings.Default.Save();
+            Properties.Settings.Default.SS_COM_PORT = Program.COM_PORTS[cbCOMPorts.SelectedIndex].Replace(" (Unit Detected)", "").Replace(" (Another app using COM Port)","");
+            Common.SaveSettings();
             
             if(Properties.Settings.Default.SS_COM_PORT == "None")
             {
@@ -158,7 +161,7 @@ namespace ELPopup5
             Properties.Settings.Default.POPUP_INBOUND = ckbInboundCalls.Checked;
             Properties.Settings.Default.POPUP_OUTBOUND = ckbOutboundCalls.Checked;
             Properties.Settings.Default.USE_COMPUTER_TIME = ckbUseComputerTime.Checked;
-            Properties.Settings.Default.Save();
+            Common.SaveSettings();
         }
 
         private void FrmOptions_FormClosing(object sender, FormClosingEventArgs e)
@@ -185,7 +188,7 @@ namespace ELPopup5
         {
             Properties.Settings.Default.USE_CUSTOM_MAIN_WINDOW_SIZING = false;
             Properties.Settings.Default.MAX_LINE_NUMBER = -1;
-            Properties.Settings.Default.Save();
+            Common.SaveSettings();
             Program.fMain.Has_Activated = false;
             Program.fMain.RefreshWindow();
         }
@@ -207,19 +210,19 @@ namespace ELPopup5
                 Properties.Settings.Default.RELAY_IP = cbRelayIP.Text;
             }
 
-            Properties.Settings.Default.Save();
+            Common.SaveSettings();
         }
 
         private void cbRelayIP_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.RELAY_IP = cbRelayIP.Text;
-            Properties.Settings.Default.Save();
+            Common.SaveSettings();
         }
 
         private void btnResetLineDisplay_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.MAX_LINE_NUMBER = -1;
-            Properties.Settings.Default.Save();
+            Common.SaveSettings();
             Program.fMain.Has_Activated = false;
             Program.fMain.RefreshWindow();
         }
@@ -241,7 +244,7 @@ namespace ELPopup5
             {
                 Properties.Settings.Default.LOGGING_FILE = sfdLoggingFile.FileName;
                 Properties.Settings.Default.LOGGING = true;
-                Properties.Settings.Default.Save();
+                Common.SaveSettings();
 
                 lbLogStatus.Text = "Logging";
                 lbLoggingFileLocation.Text = Properties.Settings.Default.LOGGING_FILE;
@@ -267,7 +270,7 @@ namespace ELPopup5
                 lbLogStatus.ForeColor = Color.Red;
 
                 Properties.Settings.Default.LOGGING = false;
-                Properties.Settings.Default.Save();
+                Common.SaveSettings();
             }
             else
             {
@@ -277,7 +280,7 @@ namespace ELPopup5
                 lbLogStatus.ForeColor = Color.Black;
 
                 Properties.Settings.Default.LOGGING = true;
-                Properties.Settings.Default.Save();
+                Common.SaveSettings();
             }
         }
 
@@ -289,23 +292,6 @@ namespace ELPopup5
             DataTable records = CallLog.GetCallLog(records_to_export);
 
             string export_string = "Date And Time,Number,Name,Duration,Line,IO,Rings" + Environment.NewLine;
-            foreach(DataRow record in records.Rows)
-            {
-
-                DateTime the_date = Common.GetDateTimeFromSQLiteDate(record["time"].ToString());
-                
-                // Export into CVS file format
-                export_string += Common.FormatDateToExportCSVFormat(the_date) + ",";
-                export_string += record["number"].ToString() + ",";
-                export_string += "\"" + record["name"].ToString() + "\",";
-                export_string += "\"" + Common.ConvertDurationToTime(int.Parse(record["dur"].ToString())) + "\",";
-                export_string += record["line"].ToString() + ",";
-                export_string += record["io"].ToString() + ",";
-                export_string += record["rings"].ToString();
-
-                export_string += Environment.NewLine;
-
-            }
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "Call_Log";
@@ -315,28 +301,60 @@ namespace ELPopup5
 
             if (r != DialogResult.Cancel && r != DialogResult.Abort && r != DialogResult.None)
             {
+                FrmTimerMsgBox fExporting = new FrmTimerMsgBox("Exporting", "Please wait...", 60000 * 10, true);
+                fExporting.Show();
+
                 if (File.Exists(sfd.FileName))
                 {
                     File.Delete(sfd.FileName);
                 }
 
+                foreach (DataRow record in records.Rows)
+                {
+                    Application.DoEvents();
+                    DateTime the_date = Common.GetDateTimeFromSQLiteDate(record["time"].ToString());
+
+                    // Export into CVS file format
+                    export_string += Common.FormatDateToExportCSVFormat(the_date) + ",";
+                    export_string += record["number"].ToString() + ",";
+                    export_string += "\"" + Common.GetUnsafeSqlString(record["name"].ToString()) + "\",";
+                    export_string += "\"" + Common.ConvertDurationToTime(int.Parse(record["dur"].ToString())).Replace(":", ".") + "\",";
+                    export_string += record["line"].ToString() + ",";
+                    export_string += record["io"].ToString() + ",";
+                    export_string += record["rings"].ToString();
+
+                    export_string += Environment.NewLine;
+
+                }
+
                 File.WriteAllText(sfd.FileName, export_string);
+
+                if (fExporting.Visible) fExporting.Close();
             }
 
         }
 
         private void btnImportOldDatabase_Click(object sender, EventArgs e)
         {
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\CallerID.com\ELPopup\"))
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\CallerID.com\ELPopup\";
 
-            OpenFileDialog ofd = new OpenFileDialog();
+                DialogResult r = ofd.ShowDialog();
 
-            DialogResult r = ofd.ShowDialog();
+                if (r != DialogResult.OK && r != DialogResult.Yes) return;
 
-            if (r != DialogResult.OK && r != DialogResult.Yes) return;
+                string filename = ofd.FileName;
 
-            string filename = ofd.FileName;
-
-            ImportOldDatabase(filename);
+                ImportOldDatabase(filename);
+            }
+            else
+            {
+                FrmTimerMsgBox msg = new FrmTimerMsgBox("No Old Database", "Could not find old ELPopup database.", 1500);
+                msg.ShowDialog();
+            }
+            
         }
 
         public void ImportOldDatabase(string filename)
@@ -346,7 +364,7 @@ namespace ELPopup5
 
             DataTable imported_call_log = CallLog.GetCallLog(999999999, filename);
 
-            FrmTimerMsgBox msg = new FrmTimerMsgBox("Importing Call Log", "Importing", 500000);
+            FrmTimerMsgBox msg = new FrmTimerMsgBox("Importing Call Log", "Importing", 500000, true);
             msg.Show();
             foreach(DataRow call in imported_call_log.Rows)
             {
@@ -361,14 +379,17 @@ namespace ELPopup5
 
             if(!DO_NOT_UPDATE) Program.fMain.RefreshCallLog();
 
-            File.Move(filename, filename.Replace(".db3", "-imported.db3"));
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
+            File.Move(filename, filename.Replace(".db3", "-imported-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Year.ToString() + "-" + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + ".db3"));
+                        
         }
 
         private void ckbStartInSystemTray_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.START_MINIMIZED = ckbStartInSystemTray.Checked;
-            Properties.Settings.Default.Save();
+            Properties.Settings.Default.START_MINIMIZED = !ckbStartInSystemTray.Checked;
+            Common.SaveSettings();
         }
 
         private void btnClearLog_Click(object sender, EventArgs e)
@@ -383,6 +404,94 @@ namespace ELPopup5
             Program.fMain.Has_Activated = false;
             Program.fMain.RefreshWindow();
 
+        }
+
+        private void btnRefreshSerialList_Click(object sender, EventArgs e)
+        {
+            Program.COM_PORTS.Clear();
+            cbCOMPorts.Items.Clear();
+            FrmMain.SerialReceiver.CloseCOMPort();
+            Program.fMain.SerialReadIn = "";
+
+            Program.COM_PORTS.Add("None");
+            string[] com_ports = SerialPort.GetPortNames();
+            string found_port_name = "";
+
+            FrmTimerMsgBox fPleaseWait = new FrmTimerMsgBox("Searching COM Ports", "Searching COM Ports. Please wait...", 100000);
+            fPleaseWait.Show();
+
+            foreach (string port_name in com_ports)
+            {
+                Program.fMain.PortScan = new SerialPort(port_name, 9600, Parity.None, 8, StopBits.One);
+                string found_text = "";
+
+                try
+                {
+                    Program.fMain.PortScan.DataReceived += new SerialDataReceivedEventHandler(Program.fMain.PortTest);
+                    Program.fMain.PortScan.Open();
+                    Program.fMain.PortScan.Write("@");
+                    Program.fMain.PortScan.ReadTimeout = 900;
+                    Common.WaitFor(1000);
+                    if (Program.fMain.SerialReadIn == "#")
+                    {
+                        found_port_name = port_name;
+                        found_text = " (Unit Detected)";
+                    }
+                    Program.fMain.PortScan.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.ToString());
+                    found_text = " (Another app using COM Port)";
+                }
+
+                Program.COM_PORTS.Add(port_name + found_text);
+
+            }
+
+            if (fPleaseWait.Visible) fPleaseWait.Close();
+
+            if (found_port_name != "" && found_port_name != "None")
+            {
+                Properties.Settings.Default.SS_COM_PORT = found_port_name;
+                Common.SaveSettings();
+            }
+
+            foreach (string port in Program.COM_PORTS)
+            {
+                cbCOMPorts.Items.Add(port);
+            }
+
+            int port_index = -1;
+            int port_count = 0;
+
+            foreach (string port in cbCOMPorts.Items)
+            {
+                if (port.Contains(Properties.Settings.Default.SS_COM_PORT))
+                {
+                    port_index = port_count;
+                    break;
+                }
+                port_count++;
+            }
+
+            if (port_index != -1)
+            {
+                cbCOMPorts.SelectedIndex = port_index;
+            }
+            else
+            {
+                cbCOMPorts.SelectedIndex = 0;
+            }
+
+        }
+
+        private void tcTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tcTabs.SelectedTab.Name.ToLower().Contains("serial"))
+            {
+                btnRefreshSerialList_Click(null, null);
+            }
         }
     }
 }
