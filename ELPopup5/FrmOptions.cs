@@ -493,5 +493,25 @@ namespace ELPopup5
                 btnRefreshSerialList_Click(null, null);
             }
         }
+
+        private void picHelpSerialServer_Click(object sender, EventArgs e)
+        {
+            Common.OpenManual(4);
+        }
+
+        private void picHelpGeneral_Click(object sender, EventArgs e)
+        {
+            Common.OpenManual(4);
+        }
+
+        private void picHelpCallRecords_Click(object sender, EventArgs e)
+        {
+            Common.OpenManual(5);
+        }
+
+        private void picHelpMisc_Click(object sender, EventArgs e)
+        {
+            Common.OpenManual(5);
+        }
     }
 }

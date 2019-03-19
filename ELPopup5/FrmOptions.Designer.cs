@@ -41,8 +41,6 @@
             this.btnRefreshSerialList = new System.Windows.Forms.Button();
             this.lbSerialStatus = new System.Windows.Forms.Label();
             this.lbSerialServerConnection = new System.Windows.Forms.Label();
-            this.picHelpCOMPort = new System.Windows.Forms.PictureBox();
-            this.picHelpRelayIP = new System.Windows.Forms.PictureBox();
             this.cbRelayIP = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -66,15 +64,21 @@
             this.btnImportOldDatabase = new System.Windows.Forms.Button();
             this.btnResetLineDisplay = new System.Windows.Forms.Button();
             this.sfdLoggingFile = new System.Windows.Forms.SaveFileDialog();
+            this.picHelpGeneral = new System.Windows.Forms.PictureBox();
+            this.picHelpSerialServer = new System.Windows.Forms.PictureBox();
+            this.picHelpCallRecords = new System.Windows.Forms.PictureBox();
+            this.picHelpMisc = new System.Windows.Forms.PictureBox();
             this.tcTabs.SuspendLayout();
             this.tcTabsPageGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndPopupTiming)).BeginInit();
             this.tcTabsPageSerialServer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picHelpCOMPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picHelpRelayIP)).BeginInit();
             this.tcTabsPageLogging.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndRecordCount)).BeginInit();
             this.tcTabsPageMisc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpGeneral)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpSerialServer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpCallRecords)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpMisc)).BeginInit();
             this.SuspendLayout();
             // 
             // tcTabs
@@ -93,6 +97,7 @@
             // 
             // tcTabsPageGeneral
             // 
+            this.tcTabsPageGeneral.Controls.Add(this.picHelpGeneral);
             this.tcTabsPageGeneral.Controls.Add(this.ckbUseComputerTime);
             this.tcTabsPageGeneral.Controls.Add(this.ckbOutboundCalls);
             this.tcTabsPageGeneral.Controls.Add(this.ckbInboundCalls);
@@ -189,11 +194,10 @@
             // 
             // tcTabsPageSerialServer
             // 
+            this.tcTabsPageSerialServer.Controls.Add(this.picHelpSerialServer);
             this.tcTabsPageSerialServer.Controls.Add(this.btnRefreshSerialList);
             this.tcTabsPageSerialServer.Controls.Add(this.lbSerialStatus);
             this.tcTabsPageSerialServer.Controls.Add(this.lbSerialServerConnection);
-            this.tcTabsPageSerialServer.Controls.Add(this.picHelpCOMPort);
-            this.tcTabsPageSerialServer.Controls.Add(this.picHelpRelayIP);
             this.tcTabsPageSerialServer.Controls.Add(this.cbRelayIP);
             this.tcTabsPageSerialServer.Controls.Add(this.label4);
             this.tcTabsPageSerialServer.Controls.Add(this.label3);
@@ -235,26 +239,6 @@
             this.lbSerialServerConnection.Size = new System.Drawing.Size(181, 16);
             this.lbSerialServerConnection.TabIndex = 1;
             this.lbSerialServerConnection.Text = "Serial Server: Not Connected";
-            // 
-            // picHelpCOMPort
-            // 
-            this.picHelpCOMPort.Image = global::ELPopup5.Properties.Resources.HelpIcon;
-            this.picHelpCOMPort.Location = new System.Drawing.Point(302, 58);
-            this.picHelpCOMPort.Name = "picHelpCOMPort";
-            this.picHelpCOMPort.Size = new System.Drawing.Size(28, 29);
-            this.picHelpCOMPort.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picHelpCOMPort.TabIndex = 6;
-            this.picHelpCOMPort.TabStop = false;
-            // 
-            // picHelpRelayIP
-            // 
-            this.picHelpRelayIP.Image = global::ELPopup5.Properties.Resources.HelpIcon;
-            this.picHelpRelayIP.Location = new System.Drawing.Point(302, 184);
-            this.picHelpRelayIP.Name = "picHelpRelayIP";
-            this.picHelpRelayIP.Size = new System.Drawing.Size(28, 29);
-            this.picHelpRelayIP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picHelpRelayIP.TabIndex = 5;
-            this.picHelpRelayIP.TabStop = false;
             // 
             // cbRelayIP
             // 
@@ -303,6 +287,7 @@
             // 
             // tcTabsPageLogging
             // 
+            this.tcTabsPageLogging.Controls.Add(this.picHelpCallRecords);
             this.tcTabsPageLogging.Controls.Add(this.lbLogStatus);
             this.tcTabsPageLogging.Controls.Add(this.lbLoggingFileLocation);
             this.tcTabsPageLogging.Controls.Add(this.btnStopLogging);
@@ -458,6 +443,7 @@
             // 
             // tcTabsPageMisc
             // 
+            this.tcTabsPageMisc.Controls.Add(this.picHelpMisc);
             this.tcTabsPageMisc.Controls.Add(this.label5);
             this.tcTabsPageMisc.Controls.Add(this.btnClearLog);
             this.tcTabsPageMisc.Controls.Add(this.ckbStartInSystemTray);
@@ -528,6 +514,54 @@
             this.btnResetLineDisplay.UseVisualStyleBackColor = true;
             this.btnResetLineDisplay.Click += new System.EventHandler(this.btnResetLineDisplay_Click);
             // 
+            // picHelpGeneral
+            // 
+            this.picHelpGeneral.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picHelpGeneral.Image = global::ELPopup5.Properties.Resources.HelpIcon1;
+            this.picHelpGeneral.Location = new System.Drawing.Point(310, 7);
+            this.picHelpGeneral.Name = "picHelpGeneral";
+            this.picHelpGeneral.Size = new System.Drawing.Size(19, 19);
+            this.picHelpGeneral.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picHelpGeneral.TabIndex = 7;
+            this.picHelpGeneral.TabStop = false;
+            this.picHelpGeneral.Click += new System.EventHandler(this.picHelpGeneral_Click);
+            // 
+            // picHelpSerialServer
+            // 
+            this.picHelpSerialServer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picHelpSerialServer.Image = global::ELPopup5.Properties.Resources.HelpIcon1;
+            this.picHelpSerialServer.Location = new System.Drawing.Point(310, 7);
+            this.picHelpSerialServer.Name = "picHelpSerialServer";
+            this.picHelpSerialServer.Size = new System.Drawing.Size(19, 19);
+            this.picHelpSerialServer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picHelpSerialServer.TabIndex = 10;
+            this.picHelpSerialServer.TabStop = false;
+            this.picHelpSerialServer.Click += new System.EventHandler(this.picHelpSerialServer_Click);
+            // 
+            // picHelpCallRecords
+            // 
+            this.picHelpCallRecords.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picHelpCallRecords.Image = global::ELPopup5.Properties.Resources.HelpIcon1;
+            this.picHelpCallRecords.Location = new System.Drawing.Point(310, 7);
+            this.picHelpCallRecords.Name = "picHelpCallRecords";
+            this.picHelpCallRecords.Size = new System.Drawing.Size(19, 19);
+            this.picHelpCallRecords.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picHelpCallRecords.TabIndex = 14;
+            this.picHelpCallRecords.TabStop = false;
+            this.picHelpCallRecords.Click += new System.EventHandler(this.picHelpCallRecords_Click);
+            // 
+            // picHelpMisc
+            // 
+            this.picHelpMisc.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picHelpMisc.Image = global::ELPopup5.Properties.Resources.HelpIcon1;
+            this.picHelpMisc.Location = new System.Drawing.Point(310, 7);
+            this.picHelpMisc.Name = "picHelpMisc";
+            this.picHelpMisc.Size = new System.Drawing.Size(19, 19);
+            this.picHelpMisc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picHelpMisc.TabIndex = 15;
+            this.picHelpMisc.TabStop = false;
+            this.picHelpMisc.Click += new System.EventHandler(this.picHelpMisc_Click);
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -549,13 +583,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.ndPopupTiming)).EndInit();
             this.tcTabsPageSerialServer.ResumeLayout(false);
             this.tcTabsPageSerialServer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picHelpCOMPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picHelpRelayIP)).EndInit();
             this.tcTabsPageLogging.ResumeLayout(false);
             this.tcTabsPageLogging.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndRecordCount)).EndInit();
             this.tcTabsPageMisc.ResumeLayout(false);
             this.tcTabsPageMisc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpGeneral)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpSerialServer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpCallRecords)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpMisc)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -574,11 +610,9 @@
         private System.Windows.Forms.CheckBox ckbUseComputerTime;
         private System.Windows.Forms.CheckBox ckbOutboundCalls;
         private System.Windows.Forms.CheckBox ckbInboundCalls;
-        private System.Windows.Forms.PictureBox picHelpRelayIP;
         private System.Windows.Forms.ComboBox cbRelayIP;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbSerialStatus;
-        private System.Windows.Forms.PictureBox picHelpCOMPort;
         private System.Windows.Forms.TabPage tcTabsPageMisc;
         private System.Windows.Forms.Button btnResetLineDisplay;
         private System.Windows.Forms.TabPage tcTabsPageLogging;
@@ -599,5 +633,9 @@
         private System.Windows.Forms.Button btnClearLog;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnRefreshSerialList;
+        private System.Windows.Forms.PictureBox picHelpGeneral;
+        private System.Windows.Forms.PictureBox picHelpSerialServer;
+        private System.Windows.Forms.PictureBox picHelpCallRecords;
+        private System.Windows.Forms.PictureBox picHelpMisc;
     }
 }

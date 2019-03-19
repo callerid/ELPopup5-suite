@@ -13,6 +13,7 @@ namespace ELPopup5
         // Forms
         public static FrmMain fMain = null;
         public static FrmOptions fOptions = null;
+        public static FrmManual fManual = null;
 
         // File paths
         public static string ConfigFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\config.dat";

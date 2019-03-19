@@ -274,5 +274,34 @@ namespace ELPopup5.Classes
             }
 
         }
+
+        public static void OpenManual(int page = 1)
+        {
+            if (Program.fManual != null)
+            {
+                if (Program.fManual.Visible) Program.fManual.Close();
+            }
+
+            if (Program.fManual == null)
+            {
+                Program.fManual = new FrmManual(page);
+                Program.fManual.Show();
+                Program.fManual.Focus();
+                return;
+            }
+            if (Program.fManual.Visible)
+            {
+                Program.fManual.WindowState = FormWindowState.Normal;
+                Program.fManual.Focus();
+                return;
+            }
+            else
+            {
+                Program.fManual = new FrmManual(page);
+                Program.fManual.Show();
+                Program.fManual.Focus();
+                return;
+            }
+        }
     }
 }

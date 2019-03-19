@@ -17,3 +17,4 @@ C:\Local VS Builds\ELPopup5\ELPopup5.exe.config
 C:\Local VS Builds\ELPopup5\ELPopup5.exe
 C:\Local VS Builds\ELPopup5\ELPopup5.pdb
 F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmMessageBox.resources
+F:\Projects\Visual Studio Projects\ELPopup5\ELPopup5\obj\Debug\ELPopup5.FrmManual.resources

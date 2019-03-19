@@ -90,8 +90,10 @@
             this.tbL9Name = new System.Windows.Forms.TextBox();
             this.lbL9 = new System.Windows.Forms.Label();
             this.lbHighLineNumber = new System.Windows.Forms.Label();
+            this.picHelpMain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpMain)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCallLog
@@ -736,11 +738,25 @@
             this.lbHighLineNumber.Text = "Line # Higher than 12 Detected";
             this.lbHighLineNumber.Visible = false;
             // 
+            // picHelpMain
+            // 
+            this.picHelpMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picHelpMain.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picHelpMain.Image = global::ELPopup5.Properties.Resources.HelpIcon1;
+            this.picHelpMain.Location = new System.Drawing.Point(723, 4);
+            this.picHelpMain.Name = "picHelpMain";
+            this.picHelpMain.Size = new System.Drawing.Size(19, 19);
+            this.picHelpMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picHelpMain.TabIndex = 45;
+            this.picHelpMain.TabStop = false;
+            this.picHelpMain.Click += new System.EventHandler(this.picHelpMain_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(749, 472);
+            this.Controls.Add(this.picHelpMain);
             this.Controls.Add(this.lbHighLineNumber);
             this.Controls.Add(this.tbL12Number);
             this.Controls.Add(this.tbL12Name);
@@ -793,6 +809,7 @@
             this.Click += new System.EventHandler(this.FrmMain_Click);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCallLog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ndDisplayCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picHelpMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -854,6 +871,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColRings;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColSortDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvCallLogColUID;
+        private System.Windows.Forms.PictureBox picHelpMain;
     }
 }
 

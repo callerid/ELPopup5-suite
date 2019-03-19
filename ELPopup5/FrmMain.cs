@@ -108,6 +108,11 @@ namespace ELPopup5
 
         }
 
+        private void SysTrayUserManual_Clicked(object sender, EventArgs e)
+        {
+            Common.OpenManual();
+        }
+
         public FrmMain()
         {
             InitializeComponent();
@@ -272,7 +277,7 @@ namespace ELPopup5
 
             ToolStripMenuItem sys_tray_menu_user_manual = new ToolStripMenuItem();
             sys_tray_menu_user_manual.Text = "User Manual";
-            sys_tray_menu_user_manual.Click += new EventHandler(SysTrayMenuClose_Clicked);
+            sys_tray_menu_user_manual.Click += new EventHandler(SysTrayUserManual_Clicked);
             sys_tray_menu.Items.Add(sys_tray_menu_user_manual);
 
             ToolStripMenuItem sys_tray_menu_close = new ToolStripMenuItem();
@@ -996,6 +1001,11 @@ namespace ELPopup5
         private void FrmMain_Click(object sender, EventArgs e)
         {
             PopulateCallLog();
+        }
+
+        private void picHelpMain_Click(object sender, EventArgs e)
+        {
+            Common.OpenManual(2);
         }
     }
 }
