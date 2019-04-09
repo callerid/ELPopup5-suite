@@ -14,6 +14,28 @@ namespace ELPopup5.Classes
     class Common
     {
 
+        public enum APP_SETTING{
+
+            POPUP_INBOUND,
+            POPUP_TIME,
+            RELAY_IP,
+            LOGGING_FILE,
+            MAIN_WINDOW_Y,
+            START_MINIMIZED,
+            CAPTURING_LINE_FILES,
+            DISPLAY_RECORD_COUNT,
+            USE_CUSTOM_MAIN_WINDOW_SIZING,
+            POPUP_OUTBOUND,
+            MAIN_WINDOW_HEIGHT,
+            MAX_LINE_NUMBER,
+            LOGGING,
+            MAIN_WINDOW_WIDTH,
+            USE_COMPUTER_TIME,
+            USE_CUSTOM_POSITION,
+            SS_COM_PORT,
+            MAIN_WINDOW_X
+        }
+
         public static void DrawColors(Form f, string title)
         {
             f.Text = title;
@@ -62,6 +84,30 @@ namespace ELPopup5.Classes
             }
 
         }
+
+        public static void InitializeSettings()
+        {
+            Program.AppSettings.Add("POPUP_INBOUND", "True");
+            Program.AppSettings.Add("POPUP_TIME", "5");
+            Program.AppSettings.Add("RELAY_IP", "0.0.0.0");
+            Program.AppSettings.Add("LOGGING_FILE", "none");
+            Program.AppSettings.Add("MAIN_WINDOW_Y", "316");
+            Program.AppSettings.Add("START_MINIMIZED", "False");
+            Program.AppSettings.Add("CAPTURING_LINE_FILES", "none");
+            Program.AppSettings.Add("DISPLAY_RECORD_COUNT", "500");
+            Program.AppSettings.Add("USE_CUSTOM_MAIN_WINDOW_SIZING", "True");
+            Program.AppSettings.Add("POPUP_OUTBOUND", "False");
+            Program.AppSettings.Add("MAIN_WINDOW_HEIGHT", "511");
+            Program.AppSettings.Add("MAX_LINE_NUMBER", "12");
+            Program.AppSettings.Add("LOGGING", "False");
+            Program.AppSettings.Add("MAIN_WINDOW_WIDTH", "777");
+            Program.AppSettings.Add("USE_COMPUTER_TIME", "True");
+            Program.AppSettings.Add("USE_CUSTOM_POSITION", "True");
+            Program.AppSettings.Add("SS_COM_PORT", "None");
+            Program.AppSettings.Add("MAIN_WINDOW_X", "370");
+
+            Program.AppSettings["POPUP_INBOUND"]
+    }
 
         public static Control FindFocusedControl(Control control)
         {
@@ -124,22 +170,22 @@ namespace ELPopup5.Classes
         {
             text = text.Substring(21);
 
-            if (Properties.Settings.Default.LOGGING_FILE == "none") return;
-            if (!Properties.Settings.Default.LOGGING) return;
+            if (Program.AppSettings["LOGGING_FILE"] == "none") return;
+            if (!(bool.Parse(Program.AppSettings["LOGGING"]))) return;
 
-            if (File.Exists(Properties.Settings.Default.LOGGING_FILE))
+            if (File.Exists(Program.AppSettings["LOGGING_FILE"]))
             {
 
-                string old = File.ReadAllText(Properties.Settings.Default.LOGGING_FILE);
+                string old = File.ReadAllText(Program.AppSettings["LOGGING_FILE"]);
 
                 string new_text = old + Environment.NewLine + text;
 
-                File.WriteAllText(Properties.Settings.Default.LOGGING_FILE, new_text);
+                File.WriteAllText(Program.AppSettings["LOGGING_FILE"], new_text);
 
             }
             else
             {
-                File.WriteAllText(Properties.Settings.Default.LOGGING_FILE, text);
+                File.WriteAllText(Program.AppSettings["LOGGING_FILE"], text);
             }
         }
 
@@ -207,7 +253,7 @@ namespace ELPopup5.Classes
 
         public static void SaveSettings()
         {
-            Properties.Settings.Default.Save();
+            SaveSettings();
 
             if (!Directory.Exists(Program.ConfigFile.Replace("config.dat", "")))
             {
@@ -216,9 +262,9 @@ namespace ELPopup5.Classes
 
             List<string> output = new List<string>();
 
-            foreach (SettingsProperty currentProperty in Properties.Settings.Default.Properties)
+            foreach (string app_setting_key in Program.AppSettings.Keys)
             {
-                output.Add(Properties.Settings.Default[currentProperty.Name].ToString());
+                output.Add(app_setting_key + "=" + Program.AppSettings[app_setting_key]);
             }
 
             File.WriteAllLines(Program.ConfigFile, output.ToArray());
@@ -232,40 +278,19 @@ namespace ELPopup5.Classes
             {
                 string[] read = File.ReadAllLines(Program.ConfigFile);
 
-                foreach(string r in read)
+                if(read.Length != Program.AppSettings.Count)
                 {
-                    settings.Add(r);
+                    if (File.Exists(Program.ConfigFile)) File.Delete(Program.ConfigFile);
+                    SaveSettings();
+                    return;
                 }
 
-                int index = 0;
-                foreach (SettingsProperty currentProperty in Properties.Settings.Default.Properties)
+                foreach(string setting in read)
                 {
-                    int boolean_setting = -1;
-                    if (settings[index] == "True" || settings[index] == "False")
-                    {
-                        boolean_setting = settings[index] == "True" ? 1 : 0;
-                    }
+                    string key = setting.Substring(0, setting.IndexOf("="));
+                    string val = setting.Substring(setting.IndexOf("=")+1);
 
-                    if(boolean_setting == -1)
-                    {
-                        int parsed_int;
-                        bool is_int = int.TryParse(settings[index], out parsed_int);
-
-                        if (is_int)
-                        {
-                            Properties.Settings.Default[currentProperty.Name] = parsed_int;
-                        }
-                        else
-                        {
-                            Properties.Settings.Default[currentProperty.Name] = settings[index];
-                        }
-                    }
-                    else
-                    {
-                        Properties.Settings.Default[currentProperty.Name] = Boolean.Parse(settings[index]);
-                    }
-                    
-                    index++;
+                    Program.AppSettings[key] = val;
                 }
             }
             else
@@ -302,6 +327,18 @@ namespace ELPopup5.Classes
                 Program.fManual.Focus();
                 return;
             }
+        }
+
+        public static void WriteOutSingleLog(int line, string number, string name)
+        {
+
+            if (Program.AppSettings["CAPTURING_LINE_FILES"] == "none") return;
+
+            string filename = Program.AppSettings["CAPTURING_LINE_FILES"] + "\\Line" + line.ToString() + ".txt";
+            string to_write = number + name;
+
+            File.WriteAllText(filename, to_write);
+
         }
     }
 }

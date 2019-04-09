@@ -50,8 +50,8 @@ namespace cid_cm.Classes
         public void AddPopup(int line, bool isInbound, string num, string name)
         {
 
-            if (!ELPopup5.Properties.Settings.Default.POPUP_INBOUND && isInbound) return;
-            if (!ELPopup5.Properties.Settings.Default.POPUP_OUTBOUND && !isInbound) return;
+            if (!ELPopup5.Program.AppSettings[""POPUP_INBOUND && isInbound) return;
+            if (!ELPopup5.Program.AppSettings[""POPUP_OUTBOUND && !isInbound) return;
 
             var uString = line + " " + (isInbound ? "1" : "0") + " " + num + " " + name;
             if (!RepeatCheckingList.Contains(uString))

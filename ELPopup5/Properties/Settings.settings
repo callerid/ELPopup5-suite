@@ -48,10 +48,13 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="START_MINIMIZED" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DISPLAY_RECORD_COUNT" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="CAPTURING_LINE_FILES" Type="System.String" Scope="User">
+      <Value Profile="(Default)">none</Value>
     </Setting>
   </Settings>
 </SettingsFile>

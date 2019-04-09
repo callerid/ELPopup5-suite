@@ -61,13 +61,14 @@
             this.lbTotalLogCount = new System.Windows.Forms.Label();
             this.btnExportRecords = new System.Windows.Forms.Button();
             this.tcTabsPageMisc = new System.Windows.Forms.TabPage();
+            this.ckbCapturingLineTextFiles = new System.Windows.Forms.CheckBox();
             this.picHelpMisc = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.ckbStartInSystemTray = new System.Windows.Forms.CheckBox();
             this.btnImportOldDatabase = new System.Windows.Forms.Button();
             this.btnResetLineDisplay = new System.Windows.Forms.Button();
             this.sfdLoggingFile = new System.Windows.Forms.SaveFileDialog();
+            this.lbCaptureTextFolder = new System.Windows.Forms.Label();
             this.tcTabs.SuspendLayout();
             this.tcTabsPageGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picHelpGeneral)).BeginInit();
@@ -479,8 +480,9 @@
             // 
             // tcTabsPageMisc
             // 
+            this.tcTabsPageMisc.Controls.Add(this.lbCaptureTextFolder);
+            this.tcTabsPageMisc.Controls.Add(this.ckbCapturingLineTextFiles);
             this.tcTabsPageMisc.Controls.Add(this.picHelpMisc);
-            this.tcTabsPageMisc.Controls.Add(this.label5);
             this.tcTabsPageMisc.Controls.Add(this.btnClearLog);
             this.tcTabsPageMisc.Controls.Add(this.ckbStartInSystemTray);
             this.tcTabsPageMisc.Controls.Add(this.btnImportOldDatabase);
@@ -492,6 +494,18 @@
             this.tcTabsPageMisc.TabIndex = 2;
             this.tcTabsPageMisc.Text = "Misc.";
             this.tcTabsPageMisc.UseVisualStyleBackColor = true;
+            // 
+            // ckbCapturingLineTextFiles
+            // 
+            this.ckbCapturingLineTextFiles.AutoSize = true;
+            this.ckbCapturingLineTextFiles.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ckbCapturingLineTextFiles.Location = new System.Drawing.Point(18, 180);
+            this.ckbCapturingLineTextFiles.Name = "ckbCapturingLineTextFiles";
+            this.ckbCapturingLineTextFiles.Size = new System.Drawing.Size(304, 21);
+            this.ckbCapturingLineTextFiles.TabIndex = 16;
+            this.ckbCapturingLineTextFiles.Text = "Write Line# text Files for Integration (Advanced)";
+            this.ckbCapturingLineTextFiles.UseVisualStyleBackColor = true;
+            this.ckbCapturingLineTextFiles.CheckedChanged += new System.EventHandler(this.ckbCapturingLineTextFiles_CheckedChanged);
             // 
             // picHelpMisc
             // 
@@ -505,25 +519,14 @@
             this.picHelpMisc.TabStop = false;
             this.picHelpMisc.Click += new System.EventHandler(this.picHelpMisc_Click);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(50, 177);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(139, 34);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Delete all Call Records\r\nfrom Database";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // btnClearLog
             // 
             this.btnClearLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearLog.Location = new System.Drawing.Point(195, 179);
+            this.btnClearLog.Location = new System.Drawing.Point(43, 126);
             this.btnClearLog.Name = "btnClearLog";
-            this.btnClearLog.Size = new System.Drawing.Size(56, 31);
+            this.btnClearLog.Size = new System.Drawing.Size(194, 26);
             this.btnClearLog.TabIndex = 3;
-            this.btnClearLog.Text = "Delete";
+            this.btnClearLog.Text = "Delete all Call Records";
             this.btnClearLog.UseVisualStyleBackColor = true;
             this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
@@ -532,7 +535,7 @@
             this.ckbStartInSystemTray.AutoSize = true;
             this.ckbStartInSystemTray.Checked = true;
             this.ckbStartInSystemTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbStartInSystemTray.Location = new System.Drawing.Point(58, 23);
+            this.ckbStartInSystemTray.Location = new System.Drawing.Point(18, 16);
             this.ckbStartInSystemTray.Name = "ckbStartInSystemTray";
             this.ckbStartInSystemTray.Size = new System.Drawing.Size(246, 25);
             this.ckbStartInSystemTray.TabIndex = 2;
@@ -543,24 +546,35 @@
             // btnImportOldDatabase
             // 
             this.btnImportOldDatabase.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImportOldDatabase.Location = new System.Drawing.Point(92, 135);
+            this.btnImportOldDatabase.Location = new System.Drawing.Point(43, 94);
             this.btnImportOldDatabase.Name = "btnImportOldDatabase";
-            this.btnImportOldDatabase.Size = new System.Drawing.Size(159, 31);
+            this.btnImportOldDatabase.Size = new System.Drawing.Size(194, 26);
             this.btnImportOldDatabase.TabIndex = 1;
-            this.btnImportOldDatabase.Text = "Import Old Database";
+            this.btnImportOldDatabase.Text = "Import Old Database Records";
             this.btnImportOldDatabase.UseVisualStyleBackColor = true;
             this.btnImportOldDatabase.Click += new System.EventHandler(this.btnImportOldDatabase_Click);
             // 
             // btnResetLineDisplay
             // 
             this.btnResetLineDisplay.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetLineDisplay.Location = new System.Drawing.Point(92, 98);
+            this.btnResetLineDisplay.Location = new System.Drawing.Point(43, 47);
             this.btnResetLineDisplay.Name = "btnResetLineDisplay";
-            this.btnResetLineDisplay.Size = new System.Drawing.Size(159, 31);
+            this.btnResetLineDisplay.Size = new System.Drawing.Size(194, 26);
             this.btnResetLineDisplay.TabIndex = 0;
-            this.btnResetLineDisplay.Text = "Reset Display Line Count";
+            this.btnResetLineDisplay.Text = "Reset Displayed Line Count";
             this.btnResetLineDisplay.UseVisualStyleBackColor = true;
             this.btnResetLineDisplay.Click += new System.EventHandler(this.btnResetLineDisplay_Click);
+            // 
+            // lbCaptureTextFolder
+            // 
+            this.lbCaptureTextFolder.AutoSize = true;
+            this.lbCaptureTextFolder.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCaptureTextFolder.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbCaptureTextFolder.Location = new System.Drawing.Point(39, 204);
+            this.lbCaptureTextFolder.Name = "lbCaptureTextFolder";
+            this.lbCaptureTextFolder.Size = new System.Drawing.Size(84, 17);
+            this.lbCaptureTextFolder.TabIndex = 17;
+            this.lbCaptureTextFolder.Text = "Folder: None";
             // 
             // FrmOptions
             // 
@@ -631,11 +645,12 @@
         private System.Windows.Forms.Button btnImportOldDatabase;
         private System.Windows.Forms.CheckBox ckbStartInSystemTray;
         private System.Windows.Forms.Button btnClearLog;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnRefreshSerialList;
         private System.Windows.Forms.PictureBox picHelpGeneral;
         private System.Windows.Forms.PictureBox picHelpSerialServer;
         private System.Windows.Forms.PictureBox picHelpCallRecords;
         private System.Windows.Forms.PictureBox picHelpMisc;
+        private System.Windows.Forms.CheckBox ckbCapturingLineTextFiles;
+        private System.Windows.Forms.Label lbCaptureTextFolder;
     }
 }

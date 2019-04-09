@@ -18,6 +18,9 @@ namespace ELPopup5
         // File paths
         public static string ConfigFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\config.dat";
 
+        // Config settings
+        public static Dictionary<string, string> AppSettings = new Dictionary<string, string>();
+        
         // Colors
         public static Color C_BACKGROUND = Color.FromArgb(214, 225, 235);
         public static Color C_TEXT = Color.Black;
@@ -36,6 +39,8 @@ namespace ELPopup5
         [STAThread]
         static void Main()
         {
+
+            Common.InitializeSettings();
 
             // Load properties
             Common.LoadSettings();
@@ -61,7 +66,7 @@ namespace ELPopup5
             fMain = new FrmMain();
 
             // Launch main form
-            if (Properties.Settings.Default.START_MINIMIZED)
+            if (Program.AppSettings[""START_MINIMIZED)
             {
                 Application.Run();
             }

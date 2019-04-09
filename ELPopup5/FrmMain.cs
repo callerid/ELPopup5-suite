@@ -180,34 +180,34 @@ namespace ELPopup5
             tbNames[11] = tbL11Name;
             tbNames[12] = tbL12Name;
 
-            switch (Properties.Settings.Default.MAX_LINE_NUMBER)
+            switch (Program.AppSettings["MAX_LINE_NUMBER"])
             {
-                case -1:
+                case "-1":
                     UnHideLines(Lines.OneThroughFour, true);
-                    Properties.Settings.Default.MAX_LINE_NUMBER = 4;
+                    Program.AppSettings["MAX_LINE_NUMBER"] = "4";
                     Common.SaveSettings();
                     break;
-                case 4:
+                case "4":
                     UnHideLines(Lines.OneThroughFour, true);
                     break;
-                case 8:
+                case "8":
                     UnHideLines(Lines.FiveThroughEight, true);
                     break;
-                case 12:
+                case "12":
                     UnHideLines(Lines.EightThroughTwelve, true);
                     break;
             }
 
             PreviousCall.Line = -1;
 
-            if (Properties.Settings.Default.USE_CUSTOM_MAIN_WINDOW_SIZING)
+            if (bool.Parse(Program.AppSettings["USE_CUSTOM_MAIN_WINDOW_SIZING"]))
             {
-                Size = new Size(Properties.Settings.Default.MAIN_WINDOW_WIDTH, Properties.Settings.Default.MAIN_WINDOW_HEIGHT);
+                Size = new Size(int.Parse(Program.AppSettings["MAIN_WINDOW_WIDTH"]), int.Parse(Program.AppSettings["MAIN_WINDOW_HEIGHT"]));
             }
 
-            if (Properties.Settings.Default.USE_CUSTOM_POSITION)
+            if (bool.Parse(Program.AppSettings["USE_CUSTOM_POSITION"]))
             {
-                Location = new Point(Properties.Settings.Default.MAIN_WINDOW_X, Properties.Settings.Default.MAIN_WINDOW_Y);
+                Location = new Point(int.Parse(Program.AppSettings["MAIN_WINDOW_X"]), int.Parse(Program.AppSettings["MAIN_WINDOW_Y"]));
             }
             else
             {
@@ -251,11 +251,11 @@ namespace ELPopup5
 
             if(found_port_name != "" && found_port_name != "None")
             {
-                Properties.Settings.Default.SS_COM_PORT = found_port_name;
+                Program.AppSettings["SS_COM_PORT"] = found_port_name;
                 Common.SaveSettings();
             }
 
-            SerialReceiver = new SerialPortReceiverClass(Properties.Settings.Default.SS_COM_PORT);          
+            SerialReceiver = new SerialPortReceiverClass(Program.AppSettings["SS_COM_PORT"]);          
 
             sys_tray_icon = new NotifyIcon();
             sys_tray_icon.Icon = new Icon("phone.ico");
@@ -314,7 +314,7 @@ namespace ELPopup5
 
             dgvCallLog.ClearSelection();
 
-            ndDisplayCount.Value = Properties.Settings.Default.DISPLAY_RECORD_COUNT;
+            ndDisplayCount.Value = Program.AppSettings[""DISPLAY_RECORD_COUNT;
 
         }
 
@@ -371,11 +371,11 @@ namespace ELPopup5
 
             PreviousReceptions.Add(call_record.Reception_String);
 
-            if (!Properties.Settings.Default.RELAY_IP.ToLower().Contains("0.0.0.0") && !string.IsNullOrEmpty(Properties.Settings.Default.RELAY_IP) && Properties.Settings.Default.RELAY_IP != "Do not Relay Data")
+            if (!Program.AppSettings["RELAY_IP"].ToLower().Contains("0.0.0.0") && !string.IsNullOrEmpty(Program.AppSettings["RELAY_IP"]) && Program.AppSettings["RELAY_IP"] != "Do not Relay Data")
             {
                 if (PreviousConnection == ConnectionType.Serial)
                 {
-                    UdpReceiverClass.SendUDP(call_record.Reception_String, Properties.Settings.Default.RELAY_IP, 3520);
+                    UdpReceiverClass.SendUDP(call_record.Reception_String, Program.AppSettings["RELAY_IP"], 3520);
                 }
             }
 
@@ -409,14 +409,14 @@ namespace ELPopup5
                 PreviousPacketWasOutbound = false;                
             }
 
-            if (call_record.IsInbound() && Properties.Settings.Default.POPUP_INBOUND)
+            if (call_record.IsInbound() && bool.Parse(Program.AppSettings["POPUP_INBOUND"]))
             {
                 PreviousCall.Line = call_record.Line;
                 PreviousCall.Number = call_record.PhoneNumber;
                 PreviousCall.Name = (string.IsNullOrEmpty(outbound_name) ? call_record.Name : outbound_name);
                 PreviousCall.IsInbound = true;
             }
-            else if (call_record.IsOutbound() && Properties.Settings.Default.POPUP_OUTBOUND)
+            else if (call_record.IsOutbound() && bool.Parse(Program.AppSettings["POPUP_OUTBOUND"]))
             {
                 PreviousCall.Line = call_record.Line;
                 PreviousCall.Number = call_record.PhoneNumber;
@@ -564,9 +564,16 @@ namespace ELPopup5
                 }
             }         
             
-            if(datetime.Month==00 || datetime.Day == 00 || Properties.Settings.Default.USE_COMPUTER_TIME)
+            if(datetime.Month==00 || datetime.Day == 00 || bool.Parse(Program.AppSettings["USE_COMPUTER_TIME"]))
             {
                 datetime = DateTime.Now;
+            }
+
+            if(Program.AppSettings["CAPTURING_LINE_FILES"] != "none")
+            {
+
+                Common.WriteOutSingleLog(line, number, name);
+
             }
 
             if (dgvCallLog.Rows.Count < 1)
@@ -638,9 +645,9 @@ namespace ELPopup5
                     tbNumbers[i].Visible = false;
                 }
 
-                if (Properties.Settings.Default.MAX_LINE_NUMBER < 4)
+                if (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) < 4)
                 {
-                    Properties.Settings.Default.MAX_LINE_NUMBER = 4;
+                    Program.AppSettings["MAX_LINE_NUMBER"] = "4";
                     Common.SaveSettings();
                 }
 
@@ -655,9 +662,9 @@ namespace ELPopup5
                     tbNumbers[i].Visible = true;
                 }
 
-                if (Properties.Settings.Default.MAX_LINE_NUMBER < 8)
+                if (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) < 8)
                 {
-                    Properties.Settings.Default.MAX_LINE_NUMBER = 8;
+                    Program.AppSettings["MAX_LINE_NUMBER"] = "8";
                     Common.SaveSettings();
                 }
 
@@ -672,40 +679,40 @@ namespace ELPopup5
                     tbNumbers[i].Visible = true;
                 }
 
-                if (Properties.Settings.Default.MAX_LINE_NUMBER < 12)
+                if (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) < 12)
                 {
-                    Properties.Settings.Default.MAX_LINE_NUMBER = 12;
+                    Program.AppSettings["MAX_LINE_NUMBER"] = "12";
                     Common.SaveSettings();
                 }
 
             }
 
-            if (!Properties.Settings.Default.USE_CUSTOM_MAIN_WINDOW_SIZING || Properties.Settings.Default.MAX_LINE_NUMBER == -1)
+            if (!bool.Parse(Program.AppSettings["USE_CUSTOM_MAIN_WINDOW_SIZING"]) || int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) == -1)
             {
-                if (Properties.Settings.Default.MAX_LINE_NUMBER == -1) Properties.Settings.Default.MAX_LINE_NUMBER = 4;
-                switch (Properties.Settings.Default.MAX_LINE_NUMBER)
+                if (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) == -1) Program.AppSettings["MAX_LINE_NUMBER"] = "4";
+                switch (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]))
                 {
                     case 4:
 
                         Size = new Size(777, 511);
-                        Properties.Settings.Default.MAIN_WINDOW_WIDTH = 777;
-                        Properties.Settings.Default.MAIN_WINDOW_HEIGHT = 511;
+                        Program.AppSettings["MAIN_WINDOW_WIDTH"] = "777";
+                        Program.AppSettings["MAIN_WINDOW_HEIGHT"] = "511";
 
                         break;
 
                     case 8:
 
                         Size = new Size(790, 511);
-                        Properties.Settings.Default.MAIN_WINDOW_WIDTH = 790;
-                        Properties.Settings.Default.MAIN_WINDOW_HEIGHT = 511;
+                        Program.AppSettings["MAIN_WINDOW_WIDTH"] = "790";
+                        Program.AppSettings["MAIN_WINDOW_HEIGHT"] = "511";
 
                         break;
 
                     case 12:
 
                         Size = new Size(1171, 511);
-                        Properties.Settings.Default.MAIN_WINDOW_WIDTH = 1171;
-                        Properties.Settings.Default.MAIN_WINDOW_HEIGHT = 511;
+                        Program.AppSettings[""MAIN_WINDOW_WIDTH = 1171;
+                        Program.AppSettings[""MAIN_WINDOW_HEIGHT = 511;
 
                         break;
                 }
@@ -810,7 +817,7 @@ namespace ELPopup5
 
         private void ndDisplayCount_Leave(object sender, EventArgs e)
         {
-            Properties.Settings.Default.DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
+            Program.AppSettings[""DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
             Common.SaveSettings();
             PopulateCallLog();
         }
@@ -876,15 +883,15 @@ namespace ELPopup5
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-            Properties.Settings.Default.USE_CUSTOM_MAIN_WINDOW_SIZING = true;
-            Properties.Settings.Default.MAIN_WINDOW_WIDTH = Size.Width;
-            Properties.Settings.Default.MAIN_WINDOW_HEIGHT = Size.Height;
+            Program.AppSettings[""USE_CUSTOM_MAIN_WINDOW_SIZING = true;
+            Program.AppSettings[""MAIN_WINDOW_WIDTH = Size.Width;
+            Program.AppSettings[""MAIN_WINDOW_HEIGHT = Size.Height;
 
-            Properties.Settings.Default.USE_CUSTOM_POSITION = true;
-            Properties.Settings.Default.MAIN_WINDOW_X = Location.X;
-            Properties.Settings.Default.MAIN_WINDOW_Y = Location.Y;
+            Program.AppSettings[""USE_CUSTOM_POSITION = true;
+            Program.AppSettings[""MAIN_WINDOW_X = Location.X;
+            Program.AppSettings[""MAIN_WINDOW_Y = Location.Y;
 
-            Properties.Settings.Default.DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
+            Program.AppSettings[""DISPLAY_RECORD_COUNT = (int)ndDisplayCount.Value;
 
             Common.SaveSettings();
 
@@ -964,17 +971,17 @@ namespace ELPopup5
 
             dgvCallLog.ClearSelection();
 
-            if (Properties.Settings.Default.USE_CUSTOM_MAIN_WINDOW_SIZING && Properties.Settings.Default.MAX_LINE_NUMBER != -1)
+            if (bool.Parse(Program.AppSettings["USE_CUSTOM_MAIN_WINDOW_SIZING"]) && int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]) != -1)
             {
-                Size = new Size(Properties.Settings.Default.MAIN_WINDOW_WIDTH, Properties.Settings.Default.MAIN_WINDOW_HEIGHT);
+                Size = new Size(int.Parse(Program.AppSettings["MAIN_WINDOW_WIDTH"]), int.Parse(Program.AppSettings["MAIN_WINDOW_HEIGHT"]));
             }
             else
             {
-                switch (Properties.Settings.Default.MAX_LINE_NUMBER)
+                switch (int.Parse(Program.AppSettings["MAX_LINE_NUMBER"]))
                 {
                     case -1:
                         UnHideLines(Lines.OneThroughFour, true);
-                        Properties.Settings.Default.MAX_LINE_NUMBER = 4;
+                        Program.AppSettings["MAX_LINE_NUMBER"] = "4";
                         Common.SaveSettings();
                         break;
                     case 4:
@@ -989,9 +996,9 @@ namespace ELPopup5
                 }
             }
 
-            if (Properties.Settings.Default.USE_CUSTOM_POSITION)
+            if (bool.Parse(Program.AppSettings["USE_CUSTOM_POSITION"]))
             {
-                Location = new Point(Properties.Settings.Default.MAIN_WINDOW_X, Properties.Settings.Default.MAIN_WINDOW_Y);
+                Location = new Point(int.Parse(Program.AppSettings["MAIN_WINDOW_X"]), int.Parse(Program.AppSettings["MAIN_WINDOW_Y"]));
             }
 
             Has_Activated = true;
