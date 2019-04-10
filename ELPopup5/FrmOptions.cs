@@ -33,19 +33,19 @@ namespace ELPopup5
 
             RefreshLogCount();
 
-            if(Program.AppSettings["LOGGING_FILE"] != "none" && bool.Parse(Program.AppSettings["LOGGING"]))
+            if(Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE] != "none" && bool.Parse(Program.AppSettings[(int)Program.AppSetting.LOGGING]))
             {
                 lbLogStatus.Text = "Logging:";
                 lbLogStatus.ForeColor = Color.Black;
-                lbLoggingFileLocation.Text = Program.AppSettings["LOGGING_FILE"];
+                lbLoggingFileLocation.Text = Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE];
                 btnStopLogging.Text = "Stop Logging";
                 btnStopLogging.Visible = true;
             }
-            else if (!bool.Parse(Program.AppSettings["LOGGING"]) && Program.AppSettings["LOGGING_FILE"] != "none")
+            else if (!bool.Parse(Program.AppSettings[(int)Program.AppSetting.LOGGING]) && Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE] != "none")
             {
                 lbLogStatus.Text = "Stopped:";
                 lbLogStatus.ForeColor = Color.Red;
-                lbLoggingFileLocation.Text = Program.AppSettings["LOGGING_FILE"];
+                lbLoggingFileLocation.Text = Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE];
                 btnStopLogging.Text = "Resume Logging";
                 btnStopLogging.Visible = true;
             }
@@ -68,7 +68,7 @@ namespace ELPopup5
 
             foreach(string port in cbCOMPorts.Items)
             {
-                if (port.Contains(Program.AppSettings["SS_COM_PORT"]))
+                if (port.Contains(Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT]))
                 {
                     port_index = port_count;
                     break;
@@ -85,36 +85,38 @@ namespace ELPopup5
                 cbCOMPorts.SelectedIndex = 0;
             }
 
-            ckbInboundCalls.Checked = bool.Parse(Program.AppSettings["POPUP_INBOUND"]);
-            ckbOutboundCalls.Checked = bool.Parse(Program.AppSettings["POPUP_OUTBOUND"]);
+            ckbInboundCalls.Checked = bool.Parse(Program.AppSettings[(int)Program.AppSetting.POPUP_INBOUND]);
+            ckbOutboundCalls.Checked = bool.Parse(Program.AppSettings[(int)Program.AppSetting.POPUP_OUTBOUND]);
 
-            ndPopupTiming.Value = int.Parse(Program.AppSettings["POPUP_TIME"]);
+            ndPopupTiming.Value = int.Parse(Program.AppSettings[(int)Program.AppSetting.POPUP_TIME]);
 
-            if (Program.AppSettings["RELAY_IP"].Contains("0.0.0.0"))
+            if (Program.AppSettings[(int)Program.AppSetting.RELAY_IP].Contains("0.0.0.0"))
             {
                 cbRelayIP.SelectedIndex = 0;
             }
-            else if (Program.AppSettings["RELAY_IP"].Contains("255.255.255.255"))
+            else if (Program.AppSettings[(int)Program.AppSetting.RELAY_IP].Contains("255.255.255.255"))
             {
                 cbRelayIP.SelectedIndex = 1;
             }
             else
             {
-                cbRelayIP.Text = Program.AppSettings["RELAY_IP"];
+                cbRelayIP.Text = Program.AppSettings[(int)Program.AppSetting.RELAY_IP];
             }
 
-            ckbStartInSystemTray.Checked = !bool.Parse(Program.AppSettings["START_MINIMIZED"]);
+            ckbStartInSystemTray.Checked = !bool.Parse(Program.AppSettings[(int)Program.AppSetting.START_MINIMIZED]);
 
-            if(Program.AppSettings["CAPTURING_LINE_FILES"] != "none")
+            if(Program.AppSettings[(int)Program.AppSetting.CAPTURING_LINE_FILES] != "none")
             {
                 ckbCapturingLineTextFiles.Checked = true;
-                lbCaptureTextFolder.Text = "Folder: " + Program.AppSettings["CAPTURING_LINE_FILES"];
+                lbCaptureTextFolder.Text = "Folder: " + Program.AppSettings[(int)Program.AppSetting.CAPTURING_LINE_FILES];
             }
             else
             {
                 ckbCapturingLineTextFiles.Checked = false;
                 lbCaptureTextFolder.Text = "Folder: None";
             }
+
+            ckbUseComputerTime.Checked = bool.Parse(Program.AppSettings[(int)Program.AppSetting.USE_COMPUTER_TIME]);
 
             LoadingForm = false;
 
@@ -123,20 +125,21 @@ namespace ELPopup5
         private void cbCOMPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            Program.AppSettings["SS_COM_PORT"] = Program.COM_PORTS[cbCOMPorts.SelectedIndex].Replace(" (Unit Detected)", "").Replace(" (Another app using COM Port)","");
+            Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT] = Program.COM_PORTS[cbCOMPorts.SelectedIndex].Replace(" (Unit Detected)", "").Replace(" (Another app using COM Port)","");
             Common.SaveSettings();
             
-            if(Program.AppSettings["SS_COM_PORT"] == "None")
+            if(Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT] == "None")
             {
                 FrmMain.SerialReceiver.CloseCOMPort();
                 lbSerialServerConnection.Text = "Serial Server: Not Connected";
                 lbSerialStatus.Text = "Serial Relay: OFF";
+                Program.fMain.UpdateTitleBar();
                 return;
             }
 
             lbSerialServerConnection.Text = "Serial Server: Connected to " + FrmMain.SerialReceiver.GetPortName();
 
-            bool relaying = !cbRelayIP.Text.ToLower().Contains("0.0.0.0") || Program.AppSettings["RELAY_IP"].ToLower().Contains("0.0.0.0");
+            bool relaying = !cbRelayIP.Text.ToLower().Contains("0.0.0.0") || Program.AppSettings[(int)Program.AppSetting.RELAY_IP].ToLower().Contains("0.0.0.0");
 
             if (relaying)
             {
@@ -147,9 +150,13 @@ namespace ELPopup5
                 lbSerialStatus.Text = "Serial Relay: Capture Only";
             }
 
-            if (LoadingForm) return;
+            if (LoadingForm)
+            {
+                Program.fMain.UpdateTitleBar();
+                return;
+            }
 
-            FrmMain.SerialReceiver.ChangePort(Program.AppSettings["SS_COM_PORT"]);
+            FrmMain.SerialReceiver.ChangePort(Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT]);
             lbSerialServerConnection.Text = "Serial Server: Connected to " + FrmMain.SerialReceiver.GetPortName();
 
             if (Program.COM_PORT_BIND_FAILED)
@@ -157,6 +164,8 @@ namespace ELPopup5
                 lbSerialServerConnection.Text = "Serial Server: Failed. Port already in use.";
                 lbSerialStatus.Text = "Serial Relay: OFF";
             }
+
+            Program.fMain.UpdateTitleBar();
         }
 
         private void ndPopupTiming_Leave(object sender, EventArgs e)
@@ -166,12 +175,14 @@ namespace ELPopup5
 
         private void SaveAllSettings()
         {
-            Program.AppSettings["SS_COM_PORT"] = cbCOMPorts.Text;
-            Program.AppSettings["POPUP_TIME"] = ndPopupTiming.Value.ToString();
-            Program.AppSettings["POPUP_INBOUND"] = ckbInboundCalls.Checked ? "True" : "False";
-            Program.AppSettings["POPUP_OUTBOUND"] = ckbOutboundCalls.Checked ? "True" : "False";
-            Program.AppSettings["USE_COMPUTER_TIME"] = ckbUseComputerTime.Checked ? "True" : "False";
+            Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT] = cbCOMPorts.Text;
+            Program.AppSettings[(int)Program.AppSetting.POPUP_TIME] = ndPopupTiming.Value.ToString();
+            Program.AppSettings[(int)Program.AppSetting.POPUP_INBOUND] = ckbInboundCalls.Checked ? "True" : "False";
+            Program.AppSettings[(int)Program.AppSetting.POPUP_OUTBOUND] = ckbOutboundCalls.Checked ? "True" : "False";
+            Program.AppSettings[(int)Program.AppSetting.USE_COMPUTER_TIME] = ckbUseComputerTime.Checked ? "True" : "False";
             Common.SaveSettings();
+
+            Program.fMain.UpdateTitleBar();
         }
 
         private void FrmOptions_FormClosing(object sender, FormClosingEventArgs e)
@@ -196,8 +207,8 @@ namespace ELPopup5
 
         private void btnResetScreenSize_Click(object sender, EventArgs e)
         {
-            Program.AppSettings["USE_CUSTOM_MAIN_WINDOW_SIZING"] = "False";
-            Program.AppSettings["MAX_LINE_NUMBER"] = "-1";
+            Program.AppSettings[(int)Program.AppSetting.USE_CUSTOM_MAIN_WINDOW_SIZING] = "False";
+            Program.AppSettings[(int)Program.AppSetting.MAX_LINE_NUMBER] = "-1";
             Common.SaveSettings();
             Program.fMain.Has_Activated = false;
             Program.fMain.RefreshWindow();
@@ -205,19 +216,19 @@ namespace ELPopup5
 
         private void cbRelayIP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.AppSettings["RELAY_IP"] = cbRelayIP.Text;
+            Program.AppSettings[(int)Program.AppSetting.RELAY_IP] = cbRelayIP.Text;
             
             if(cbRelayIP.Text.ToLower().Contains("do not relay data"))
             {
-                Program.AppSettings["RELAY_IP"] = "0.0.0.0";
+                Program.AppSettings[(int)Program.AppSetting.RELAY_IP] = "0.0.0.0";
             }
             else if (cbRelayIP.Text.ToLower().Contains("255.255.255.255"))
             {
-                Program.AppSettings["RELAY_IP"] = "255.255.255.255";
+                Program.AppSettings[(int)Program.AppSetting.RELAY_IP] = "255.255.255.255";
             }
             else
             {
-                Program.AppSettings["RELAY_IP"] = cbRelayIP.Text;
+                Program.AppSettings[(int)Program.AppSetting.RELAY_IP] = cbRelayIP.Text;
             }
 
             Common.SaveSettings();
@@ -225,13 +236,13 @@ namespace ELPopup5
 
         private void cbRelayIP_TextChanged(object sender, EventArgs e)
         {
-            Program.AppSettings["RELAY_IP"] = cbRelayIP.Text;
+            Program.AppSettings[(int)Program.AppSetting.RELAY_IP] = cbRelayIP.Text;
             Common.SaveSettings();
         }
 
         private void btnResetLineDisplay_Click(object sender, EventArgs e)
         {
-            Program.AppSettings["MAX_LINE_NUMBER"] = "-1";
+            Program.AppSettings[(int)Program.AppSetting.MAX_LINE_NUMBER] = "-1";
             Common.SaveSettings();
             Program.fMain.Has_Activated = false;
             Program.fMain.RefreshWindow();
@@ -252,12 +263,12 @@ namespace ELPopup5
 
             if(r!= DialogResult.Cancel && r!= DialogResult.Abort && r != DialogResult.None)
             {
-                Program.AppSettings["LOGGING_FILE"] = sfdLoggingFile.FileName;
-                Program.AppSettings["LOGGING"] = "True";
+                Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE] = sfdLoggingFile.FileName;
+                Program.AppSettings[(int)Program.AppSetting.LOGGING] = "True";
                 Common.SaveSettings();
 
                 lbLogStatus.Text = "Logging";
-                lbLoggingFileLocation.Text = Program.AppSettings["LOGGING_FILE"];
+                lbLoggingFileLocation.Text = Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE];
                 btnStopLogging.Visible = true;
 
             }
@@ -272,14 +283,14 @@ namespace ELPopup5
         private void lbStopLogging_Click(object sender, EventArgs e)
         {
 
-            if(btnStopLogging.Text != "Resume Logging" && Program.AppSettings["LOGGING_FILE"] != "none")
+            if(btnStopLogging.Text != "Resume Logging" && Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE] != "none")
             {
                 btnStopLogging.Text = "Resume Logging";
 
                 lbLogStatus.Text = "Stopped:";
                 lbLogStatus.ForeColor = Color.Red;
 
-                Program.AppSettings["LOGGING"] = "False";
+                Program.AppSettings[(int)Program.AppSetting.LOGGING] = "False";
                 Common.SaveSettings();
             }
             else
@@ -289,7 +300,7 @@ namespace ELPopup5
                 lbLogStatus.Text = "Logging:";
                 lbLogStatus.ForeColor = Color.Black;
 
-                Program.AppSettings["LOGGING"] = "True";
+                Program.AppSettings[(int)Program.AppSetting.LOGGING] = "True";
                 Common.SaveSettings();
             }
         }
@@ -398,7 +409,7 @@ namespace ELPopup5
 
         private void ckbStartInSystemTray_CheckedChanged(object sender, EventArgs e)
         {
-            Program.AppSettings["START_MINIMIZED"] = (!ckbStartInSystemTray.Checked) ? "True" : "False";
+            Program.AppSettings[(int)Program.AppSetting.START_MINIMIZED] = (!ckbStartInSystemTray.Checked) ? "True" : "False";
             Common.SaveSettings();
         }
 
@@ -463,7 +474,7 @@ namespace ELPopup5
 
             if (found_port_name != "" && found_port_name != "None")
             {
-                Program.AppSettings["SS_COM_PORT"] = found_port_name;
+                Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT] = found_port_name;
                 Common.SaveSettings();
             }
 
@@ -477,7 +488,7 @@ namespace ELPopup5
 
             foreach (string port in cbCOMPorts.Items)
             {
-                if (port.Contains(Program.AppSettings["SS_COM_PORT"]))
+                if (port.Contains(Program.AppSettings[(int)Program.AppSetting.SS_COM_PORT]))
                 {
                     port_index = port_count;
                     break;
@@ -544,7 +555,7 @@ namespace ELPopup5
                     if (result == DialogResult.OK && !string.IsNullOrEmpty(fbd.SelectedPath))
                     {
                         string dir = fbd.SelectedPath;
-                        Program.AppSettings["CAPTURING_LINE_FILES"] = dir;
+                        Program.AppSettings[(int)Program.AppSetting.CAPTURING_LINE_FILES] = dir;
                         lbCaptureTextFolder.Text = "Folder: " + dir;
                         Common.SaveSettings();
                     }
@@ -567,7 +578,7 @@ namespace ELPopup5
                     return;
                 }
 
-                Program.AppSettings["CAPTURING_LINE_FILES"] = "none";
+                Program.AppSettings[(int)Program.AppSetting.CAPTURING_LINE_FILES] = "none";
                 lbCaptureTextFolder.Text = "Folder: None";
                 Common.SaveSettings();
 

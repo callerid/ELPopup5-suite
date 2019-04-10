@@ -44,6 +44,7 @@ namespace ELPopup5.Classes
             if(port_name == "None")
             {
                 COM_PORT = new SerialPort();
+                PORT_NAME = "None";
                 return;
             }
 
@@ -97,6 +98,7 @@ namespace ELPopup5.Classes
             }
 
             COM_PORT = new SerialPort();
+            PORT_NAME = "None";
         }
 
         public void WriteToCOMPort(string send_this)

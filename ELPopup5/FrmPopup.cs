@@ -31,7 +31,7 @@ namespace ELPopup5
         public FrmPopup(int id, int line, bool isInbound, string num, string name, int x, int y, int pos, string uString)
         {
             InitializeComponent();
-            timerAutoClose.Interval = Program.AppSettings[""POPUP_TIME * 1000;
+            timerAutoClose.Interval = int.Parse(Program.AppSettings[(int)Program.AppSetting.POPUP_TIME]) * 1000;
 
             LineNumber = line;
 

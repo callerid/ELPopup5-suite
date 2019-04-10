@@ -19,7 +19,7 @@ namespace ELPopup5
         public static string ConfigFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\config.dat";
 
         // Config settings
-        public static Dictionary<string, string> AppSettings = new Dictionary<string, string>();
+        public static Dictionary<int, string> AppSettings = new Dictionary<int, string>();
         
         // Colors
         public static Color C_BACKGROUND = Color.FromArgb(214, 225, 235);
@@ -35,6 +35,29 @@ namespace ELPopup5
         public static bool COM_PORT_BIND_FAILED = false;
 
         public static List<string> COM_PORTS = new List<string>();
+
+        public enum AppSetting
+        {
+
+            POPUP_INBOUND,
+            POPUP_TIME,
+            RELAY_IP,
+            LOGGING_FILE,
+            MAIN_WINDOW_Y,
+            START_MINIMIZED,
+            CAPTURING_LINE_FILES,
+            DISPLAY_RECORD_COUNT,
+            USE_CUSTOM_MAIN_WINDOW_SIZING,
+            POPUP_OUTBOUND,
+            MAIN_WINDOW_HEIGHT,
+            MAX_LINE_NUMBER,
+            LOGGING,
+            MAIN_WINDOW_WIDTH,
+            USE_COMPUTER_TIME,
+            USE_CUSTOM_POSITION,
+            SS_COM_PORT,
+            MAIN_WINDOW_X
+        }
 
         [STAThread]
         static void Main()
@@ -52,7 +75,7 @@ namespace ELPopup5
 
             if (exists)
             {
-                FrmTimerMsgBox msg = new FrmTimerMsgBox("App Already Opened", "ELPoup 5 Already Running", 4000);
+                FrmTimerMsgBox msg = new FrmTimerMsgBox("App Already Opened", "ELPoup 5 Already Running in System Tray", 4000);
                 msg.ShowDialog();
                 Application.Exit();
                 return;
@@ -66,14 +89,7 @@ namespace ELPopup5
             fMain = new FrmMain();
 
             // Launch main form
-            if (Program.AppSettings[""START_MINIMIZED)
-            {
-                Application.Run();
-            }
-            else
-            {
-                Application.Run(fMain);
-            }
+            Application.Run(fMain);            
 
         }
     }

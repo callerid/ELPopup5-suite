@@ -170,6 +170,7 @@ namespace ELPopup5.Classes
             rtn.Columns.Add("type");
             rtn.Columns.Add("checksum");
             rtn.Columns.Add("uid");
+            rtn.Columns.Add("ck");
 
             string query = "SELECT * FROM calls ORDER BY DateAndTime DESC LIMIT " + limit + ";";
 
@@ -184,7 +185,7 @@ namespace ELPopup5.Classes
                 {
                     while (reader.Read())
                     {
-                        rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["Type"], reader["Checksum"], reader["UID"]);
+                        rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["Type"], reader["Checksum"], reader["UID"], reader["Checksum"]);
                     }
                 }
                 else
@@ -333,6 +334,7 @@ namespace ELPopup5.Classes
             rtn.Columns.Add("io");
             rtn.Columns.Add("rings");
             rtn.Columns.Add("uid");
+            rtn.Columns.Add("ck");
 
             SQLiteCommand command = new SQLiteCommand(query, myConnection);
             command.CommandText = query;
@@ -340,7 +342,7 @@ namespace ELPopup5.Classes
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["UID"]);
+                rtn.Rows.Add(reader["Name"], reader["Number"], reader["DateAndTime"], reader["Duration"], reader["Line"], reader["Indicator"], reader["Rings"], reader["UID"], reader["Checksum"]);
             }
 
             try
@@ -377,8 +379,7 @@ namespace ELPopup5.Classes
             DataTable rtn = new DataTable();
             rtn.Columns.Add("name");
 
-            string query = "SELECT * FROM calls WHERE TRIM(Number) = '" + phone_number + "' OR TRIM(Number) = '" + Common.FormatPhoneNumber(phone_number) + "';";
-
+            string query = "SELECT * FROM calls WHERE TRIM(Number) = '" + phone_number + "' OR TRIM(Number) = '" + Common.FormatPhoneNumber(phone_number) + "' ORDER BY DateAndTime DESC;";
             SQLiteCommand command = new SQLiteCommand(query, myConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
