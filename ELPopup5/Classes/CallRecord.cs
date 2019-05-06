@@ -79,7 +79,16 @@ namespace ELPopup5.Classes
                 RingType = CallMatch.Groups[6].Value;
                 RingNumber = int.Parse(CallMatch.Groups[7].Value.ToString());
 
-                DateTime = DateTime.ParseExact(CallMatch.Groups[8].Value.ToString(), "MM/dd hh:mm tt", new CultureInfo("en-US"));
+                try
+                {
+                    DateTime = DateTime.ParseExact(CallMatch.Groups[8].Value.ToString(), "MM/dd hh:mm tt", new CultureInfo("en-US"));
+                }
+                catch(Exception ex)
+                {
+                    DateTime = DateTime.Now;
+                    Console.WriteLine(ex.ToString());
+                }
+                
 
                 PhoneNumber = CallMatch.Groups[9].Value;
                 Name = CallMatch.Groups[10].Value;

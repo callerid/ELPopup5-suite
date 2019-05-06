@@ -17,6 +17,7 @@ namespace ELPopup5
 
         // File paths
         public static string ConfigFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\config.dat";
+        public static string ErrorLogFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\CallerID.com\ELPopup5\error_log.dat";
 
         // Config settings
         public static Dictionary<int, string> AppSettings = new Dictionary<int, string>();

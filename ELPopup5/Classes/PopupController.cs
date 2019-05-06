@@ -25,7 +25,7 @@ namespace cid_cm.Classes
             PopupsList = new List<FrmPopup>();
             RepeatCheckingList = new List<string>();
 
-            PosIsTaken = new bool[8];
+            PosIsTaken = new bool[20];
             PosIsTaken[0] = false;
             PosIsTaken[1] = false;
             PosIsTaken[2] = false;
@@ -34,8 +34,20 @@ namespace cid_cm.Classes
             PosIsTaken[5] = false;
             PosIsTaken[6] = false;
             PosIsTaken[7] = false;
+            PosIsTaken[8] = false;
+            PosIsTaken[9] = false;
+            PosIsTaken[10] = false;
+            PosIsTaken[11] = false;
+            PosIsTaken[12] = false;
+            PosIsTaken[13] = false;
+            PosIsTaken[14] = false;
+            PosIsTaken[15] = false;
+            PosIsTaken[16] = false;
+            PosIsTaken[17] = false;
+            PosIsTaken[18] = false;
+            PosIsTaken[19] = false;
 
-            PosY = new int[8];
+            PosY = new int[20];
             PosY[0] = 0;
             PosY[1] = popupHeight * 1;
             PosY[2] = popupHeight * 2;
@@ -44,6 +56,18 @@ namespace cid_cm.Classes
             PosY[5] = popupHeight * 5;
             PosY[6] = popupHeight * 6;
             PosY[7] = popupHeight * 7;
+            PosY[8] = popupHeight * 8;
+            PosY[9] = popupHeight * 9;
+            PosY[10] = popupHeight * 10;
+            PosY[11] = popupHeight * 11;
+            PosY[12] = popupHeight * 12;
+            PosY[13] = popupHeight * 13;
+            PosY[14] = popupHeight * 14;
+            PosY[15] = popupHeight * 15;
+            PosY[16] = popupHeight * 16;
+            PosY[17] = popupHeight * 17;
+            PosY[18] = popupHeight * 18;
+            PosY[19] = popupHeight * 19;
 
         }
 
@@ -63,7 +87,7 @@ namespace cid_cm.Classes
                 return;
             }
 
-            if (popups > 8) return;
+            if (popups > 14) return;
 
             Random r = new Random();
             int uId = r.Next(0, 10000);
