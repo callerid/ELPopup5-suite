@@ -208,6 +208,19 @@ namespace ELPopup5
 
             if (bool.Parse(Program.AppSettings[(int)Program.AppSetting.USE_CUSTOM_POSITION]))
             {
+
+                if(int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X]) > Screen.PrimaryScreen.Bounds.Width ||
+                    int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X]) < 0)
+                {
+                    Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X] = "0";
+                }
+
+                if (int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y]) > Screen.PrimaryScreen.Bounds.Height ||
+                    int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y]) < 0)
+                {
+                    Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y] = "0";
+                }
+
                 Location = new Point(int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X]), int.Parse(Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y]));
             }
             else
@@ -463,7 +476,14 @@ namespace ELPopup5
                 return;
             }
 
-            Common.AttmptWriteToLog(call_record.Reception_String);
+            if (PreviousConnection == ConnectionType.Serial)
+            {
+                Common.AttmptWriteToLog(SerialPortReceiverClass.PreviousPacket, true);
+            }
+            else
+            {
+                Common.AttmptWriteToLog(call_record.Reception_String, false);
+            }
 
             if (call_record.Detailed)
             {
@@ -904,8 +924,26 @@ namespace ELPopup5
             Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_HEIGHT] = Size.Height.ToString();
 
             Program.AppSettings[(int)Program.AppSetting.USE_CUSTOM_POSITION] = "True";
-            Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X] = Location.X.ToString();
-            Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y] = Location.Y.ToString();
+
+            if(Location.X > Screen.PrimaryScreen.Bounds.Width || Location.X < 0)
+            {
+                Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X] = "0";
+                Program.AppSettings[(int)Program.AppSetting.USE_CUSTOM_POSITION] = "False";
+            }
+            else
+            {
+                Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_X] = Location.X.ToString();
+            }
+
+            if (Location.Y > Screen.PrimaryScreen.Bounds.Height || Location.Y < 0)
+            {
+                Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y] = "0";
+                Program.AppSettings[(int)Program.AppSetting.USE_CUSTOM_POSITION] = "False";
+            }
+            else
+            {
+                Program.AppSettings[(int)Program.AppSetting.MAIN_WINDOW_Y] = Location.Y.ToString();
+            }
 
             Program.AppSettings[(int)Program.AppSetting.DISPLAY_RECORD_COUNT] = ndDisplayCount.Value.ToString();
 

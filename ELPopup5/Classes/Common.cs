@@ -145,9 +145,9 @@ namespace ELPopup5.Classes
             sw.Stop();
         }
 
-        public static void AttmptWriteToLog(string text)
+        public static void AttmptWriteToLog(string text, bool is_serial)
         {
-            text = text.Substring(21);
+            if (!is_serial) text = text.Substring(21);
 
             if (Program.AppSettings[(int)Program.AppSetting.LOGGING_FILE] == "none") return;
             if (!(bool.Parse(Program.AppSettings[(int)Program.AppSetting.LOGGING]))) return;
